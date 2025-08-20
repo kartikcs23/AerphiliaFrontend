@@ -1,8 +1,3 @@
-/**
- * Event Categories for Aerophilia 2025
- * Defines the available event categories and their properties
- */
-
 import type { EventCategory } from '../types/Event.types';
 
 export const EVENT_CATEGORIES: EventCategory[] = [

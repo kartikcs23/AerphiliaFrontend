@@ -1,8 +1,3 @@
-/**
- * Contact Page for Aerophilia 2025
- * Professional contact form with multiple contact methods
- */
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, Send, MessageCircle, User, Building } from 'lucide-react';

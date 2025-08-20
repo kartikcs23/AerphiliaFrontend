@@ -1,8 +1,3 @@
-/**
- * Events Page for Aerophilia 2025
- * Display all events with filtering and search
- */
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Calendar, Clock, MapPin, Users, Trophy, Rocket, Plane, Cog, Brain, Target } from 'lucide-react';

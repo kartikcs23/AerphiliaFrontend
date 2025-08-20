@@ -1,8 +1,3 @@
-/**
- * Main App Component for Aerophilia 2025
- * Root component with routing, context providers, and global layout
- */
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { RegistrationProgressProvider } from './context/RegistrationProgressContext';

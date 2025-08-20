@@ -1,11 +1,6 @@
-/**
- * Registration Page for Aerophilia 2025
- * Multi-step registration form with payment integration
- */
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Phone, School, CreditCard, Check, ArrowLeft, ArrowRight, Upload, Calendar } from 'lucide-react';
+import { User,  School, CreditCard, Check, ArrowLeft, ArrowRight,  Calendar } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import type { RegistrationPageProps } from './RegistrationPage.types';
 

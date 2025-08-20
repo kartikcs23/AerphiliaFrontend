@@ -1,8 +1,3 @@
-/**
- * useApi Hook for Aerophilia 2025
- * Custom hook for handling API calls with loading states and error handling
- */
-
 import { useState, useEffect, useCallback } from 'react';
 
 // Types for useApi hook

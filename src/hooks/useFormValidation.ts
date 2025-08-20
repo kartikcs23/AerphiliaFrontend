@@ -1,8 +1,3 @@
-/**
- * useFormValidation Hook for Aerophilia 2025
- * Custom hook for form validation with TypeScript support
- */
-
 import { useState, useCallback } from 'react';
 import { APP_MESSAGES } from '../constants/appMessages';
 

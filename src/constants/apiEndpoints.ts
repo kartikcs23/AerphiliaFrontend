@@ -1,8 +1,3 @@
-/**
- * API Endpoints for Aerophilia 2025
- * Centralized API endpoint definitions
- */
-
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 export const API_ENDPOINTS = {
