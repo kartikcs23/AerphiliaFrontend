@@ -1,0 +1,238 @@
+/**
+ * Event Categories for Aerophilia 2025
+ * Defines the available event categories and their properties
+ */
+
+import type { EventCategory } from '../types/Event.types';
+
+export const EVENT_CATEGORIES: EventCategory[] = [
+  {
+    id: 'aeromodelling',
+    name: 'Aeromodelling',
+    description: 'Design, build, and fly model aircraft in various competitions',
+    icon: '✈️',
+    color: 'from-blue-600 to-cyan-500',
+  },
+  {
+    id: 'robotics',
+    name: 'Robotics',
+    description: 'Create and program robots for exciting challenges and competitions',
+    icon: '🤖',
+    color: 'from-purple-600 to-blue-500',
+  },
+  {
+    id: 'coding',
+    name: 'Coding',
+    description: 'Test your programming skills in algorithmic and development challenges',
+    icon: '💻',
+    color: 'from-green-600 to-teal-500',
+  },
+  {
+    id: 'innovation',
+    name: 'Innovation',
+    description: 'Showcase groundbreaking ideas and innovative solutions',
+    icon: '💡',
+    color: 'from-yellow-500 to-orange-500',
+  },
+  {
+    id: 'design',
+    name: 'Design',
+    description: 'Creative design competitions spanning multiple disciplines',
+    icon: '🎨',
+    color: 'from-pink-500 to-rose-500',
+  },
+  {
+    id: 'technical',
+    name: 'Technical',
+    description: 'Engineering and technical skill-based competitions',
+    icon: '⚙️',
+    color: 'from-gray-600 to-slate-500',
+  },
+];
+
+export const MOCK_EVENTS = [
+  {
+    id: '1',
+    name: 'RC Plane Race',
+    description: 'High-speed remote control plane racing competition',
+    longDescription: 'Experience the thrill of high-speed remote control plane racing! Design, build, and pilot your custom RC aircraft through challenging courses. This competition tests both engineering skills and piloting expertise.',
+    category: EVENT_CATEGORIES[0],
+    maxParticipants: 50,
+    currentParticipants: 32,
+    teamSize: { min: 1, max: 3 },
+    registrationFee: 500,
+    prizes: [
+      { position: '1st', amount: 15000, description: 'Winner Trophy + Cash Prize' },
+      { position: '2nd', amount: 10000, description: 'Runner-up Trophy + Cash Prize' },
+      { position: '3rd', amount: 5000, description: 'Third Place Trophy + Cash Prize' },
+    ],
+    date: new Date('2025-03-15'),
+    time: { start: '09:00', end: '17:00' },
+    venue: 'Main Ground',
+    rules: [
+      'RC planes must be built by the team',
+      'Maximum wingspan: 1.5 meters',
+      'Electric motors only',
+      'Safety gear mandatory',
+    ],
+    coordinators: [
+      { id: '1', name: 'Arjun Sharma', email: 'arjun@aerophilia.com', phone: '+91 98765 43210' },
+      { id: '2', name: 'Priya Patel', email: 'priya@aerophilia.com', phone: '+91 98765 43211' },
+    ],
+    schedule: [
+      { id: '1', time: '09:00', activity: 'Registration & Technical Inspection' },
+      { id: '2', time: '10:00', activity: 'Practice Rounds' },
+      { id: '3', time: '12:00', activity: 'Qualifying Rounds' },
+      { id: '4', time: '14:00', activity: 'Lunch Break' },
+      { id: '5', time: '15:00', activity: 'Final Races' },
+      { id: '6', time: '17:00', activity: 'Prize Distribution' },
+    ],
+    image: '/assets/events/rc-plane-race.jpg',
+    isRegistrationOpen: true,
+    tags: ['racing', 'remote-control', 'engineering'],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '2',
+    name: 'Line Following Robot',
+    description: 'Build autonomous robots that can follow a designated path',
+    longDescription: 'Create an autonomous robot capable of following a complex line course with obstacles and challenges. This competition combines programming, electronics, and mechanical design skills.',
+    category: EVENT_CATEGORIES[1],
+    maxParticipants: 40,
+    currentParticipants: 28,
+    teamSize: { min: 2, max: 4 },
+    registrationFee: 600,
+    prizes: [
+      { position: '1st', amount: 20000, description: 'Winner Trophy + Cash Prize' },
+      { position: '2nd', amount: 12000, description: 'Runner-up Trophy + Cash Prize' },
+      { position: '3rd', amount: 8000, description: 'Third Place Trophy + Cash Prize' },
+    ],
+    date: new Date('2025-03-16'),
+    time: { start: '10:00', end: '16:00' },
+    venue: 'Robotics Lab',
+    rules: [
+      'Robot must be autonomous',
+      'Maximum size: 30cm x 30cm x 30cm',
+      'No external assistance during run',
+      'Time limit: 5 minutes per run',
+    ],
+    coordinators: [
+      { id: '3', name: 'Rahul Kumar', email: 'rahul@aerophilia.com', phone: '+91 98765 43212' },
+    ],
+    schedule: [
+      { id: '1', time: '10:00', activity: 'Registration & Bot Inspection' },
+      { id: '2', time: '11:00', activity: 'Practice Runs' },
+      { id: '3', time: '13:00', activity: 'Competition Rounds' },
+      { id: '4', time: '15:00', activity: 'Final Runs' },
+      { id: '5', time: '16:00', activity: 'Results & Prize Distribution' },
+    ],
+    image: '/assets/events/line-following.jpg',
+    isRegistrationOpen: true,
+    tags: ['autonomous', 'programming', 'sensors'],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '3',
+    name: 'Algorithm Battle',
+    description: 'Competitive programming contest with challenging problems',
+    longDescription: 'Test your algorithmic thinking and programming skills in this intense coding competition. Solve complex problems within time constraints and compete with the best programmers.',
+    category: EVENT_CATEGORIES[2],
+    maxParticipants: 100,
+    currentParticipants: 67,
+    teamSize: { min: 1, max: 2 },
+    registrationFee: 300,
+    prizes: [
+      { position: '1st', amount: 25000, description: 'Winner Trophy + Cash Prize + Internship Opportunity' },
+      { position: '2nd', amount: 15000, description: 'Runner-up Trophy + Cash Prize' },
+      { position: '3rd', amount: 10000, description: 'Third Place Trophy + Cash Prize' },
+    ],
+    date: new Date('2025-03-17'),
+    time: { start: '14:00', end: '18:00' },
+    venue: 'Computer Lab',
+    rules: [
+      'Individual or team participation',
+      'Internet access restricted',
+      'Only standard libraries allowed',
+      'Multiple programming languages supported',
+    ],
+    coordinators: [
+      { id: '4', name: 'Sneha Reddy', email: 'sneha@aerophilia.com', phone: '+91 98765 43213' },
+      { id: '5', name: 'Vikram Singh', email: 'vikram@aerophilia.com', phone: '+91 98765 43214' },
+    ],
+    schedule: [
+      { id: '1', time: '14:00', activity: 'Registration & System Setup' },
+      { id: '2', time: '14:30', activity: 'Contest Briefing' },
+      { id: '3', time: '15:00', activity: 'Competition Begins' },
+      { id: '4', time: '17:30', activity: 'Competition Ends' },
+      { id: '5', time: '18:00', activity: 'Results & Prize Distribution' },
+    ],
+    image: '/assets/events/algorithm-battle.jpg',
+    isRegistrationOpen: true,
+    tags: ['algorithms', 'competitive-programming', 'problem-solving'],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
+
+export const KEYNOTE_SPEAKERS = [
+  {
+    id: '1',
+    name: 'Dr. Rajesh Khurana',
+    title: 'Chief Scientist, ISRO',
+    image: '/assets/speakers/rajesh-khurana.jpg',
+    bio: 'Leading aerospace engineer with 20+ years experience in satellite technology and space missions.',
+    expertise: ['Aerospace Engineering', 'Satellite Technology', 'Space Missions'],
+    session: 'Future of Aerospace Technology in India',
+  },
+  {
+    id: '2',
+    name: 'Prof. Anita Sharma',
+    title: 'Head of Robotics, IIT Delhi',
+    image: '/assets/speakers/anita-sharma.jpg',
+    bio: 'Renowned robotics researcher pioneering work in autonomous systems and AI.',
+    expertise: ['Robotics', 'Artificial Intelligence', 'Autonomous Systems'],
+    session: 'The Evolution of Intelligent Robots',
+  },
+  {
+    id: '3',
+    name: 'Arjun Malhotra',
+    title: 'CTO, TechCorp Industries',
+    image: '/assets/speakers/arjun-malhotra.jpg',
+    bio: 'Tech entrepreneur and innovator in the field of emerging technologies.',
+    expertise: ['Technology Innovation', 'Startups', 'Emerging Tech'],
+    session: 'Building Tomorrow\'s Technology Today',
+  },
+];
+
+export const PARTNERS = [
+  {
+    id: '1',
+    name: 'TechCorp Industries',
+    logo: '/assets/partners/techcorp.png',
+    type: 'Title Sponsor',
+    website: 'https://techcorp.com',
+  },
+  {
+    id: '2',
+    name: 'Innovation Labs',
+    logo: '/assets/partners/innovation-labs.png',
+    type: 'Gold Partner',
+    website: 'https://innovationlabs.com',
+  },
+  {
+    id: '3',
+    name: 'Future Systems',
+    logo: '/assets/partners/future-systems.png',
+    type: 'Silver Partner',
+    website: 'https://futuresystems.com',
+  },
+  {
+    id: '4',
+    name: 'Tech Academy',
+    logo: '/assets/partners/tech-academy.png',
+    type: 'Education Partner',
+    website: 'https://techacademy.com',
+  },
+];
