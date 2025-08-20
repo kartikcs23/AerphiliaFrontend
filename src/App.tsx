@@ -36,7 +36,7 @@ function App() {
                 <Route path="/register/:eventId" element={<RegistrationPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/team-making/:eventId" element={<TeamMakingPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<LoginPage />} />

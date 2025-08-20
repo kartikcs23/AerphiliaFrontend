@@ -60,7 +60,7 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={`bg-gradient-to-b from-black via-slate-950 to-black border-t border-blue-500/20 ${className}`}>
+    <footer className={`w-full bg-gradient-to-b from-black via-slate-950 to-black border-t border-blue-500/20 ${className}`}>
       {/* Animated airplane trail */}
       <div className="relative overflow-hidden">
         <motion.div
@@ -73,7 +73,7 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
         </motion.div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand Section */}
