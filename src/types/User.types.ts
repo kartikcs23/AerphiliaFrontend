@@ -1,8 +1,3 @@
-/**
- * User Types for Aerophilia 2025
- * Defines the structure for user objects throughout the application
- */
-
 export interface User {
   id: string;
   email: string;

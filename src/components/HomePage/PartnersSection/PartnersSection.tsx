@@ -1,8 +1,3 @@
-/**
- * Enhanced Partners Section for Aerophilia 2025
- * Showcase sponsors and partners with stunning animations
- */
-
 import { motion } from 'framer-motion';
 import { PARTNERS } from '../../../constants/eventCategories';
 import { Card, CardContent } from '@/components/ui/card';

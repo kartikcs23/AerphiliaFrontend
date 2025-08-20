@@ -1,8 +1,3 @@
-/**
- * Authentication Context for Aerophilia 2025
- * Manages user authentication state throughout the application
- */
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { User, AuthState, LoginCredentials, SignUpCredentials } from '../types/User.types';

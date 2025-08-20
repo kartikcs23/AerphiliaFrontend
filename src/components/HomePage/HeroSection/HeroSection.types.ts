@@ -1,7 +1,3 @@
-/**
- * Hero Section Types for Aerophilia 2025
- */
-
 export interface HeroSectionProps {
   className?: string;
 }

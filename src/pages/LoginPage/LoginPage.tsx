@@ -1,8 +1,3 @@
-/**
- * Login Page for Aerophilia 2025
- * Authentication with multiple login options
- */
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, User, Phone, Eye, EyeOff, Plane, ArrowRight } from 'lucide-react';

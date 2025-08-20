@@ -1,8 +1,3 @@
-/**
- * Event Types for Aerophilia 2025
- * Defines the structure for event objects and related data
- */
-
 export interface Event {
   id: string;
   name: string;

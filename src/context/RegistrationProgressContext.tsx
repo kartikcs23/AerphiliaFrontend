@@ -1,8 +1,3 @@
-/**
- * Registration Progress Context for Aerophilia 2025
- * Manages multi-step registration flow state
- */
-
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { RegistrationProgress, RegistrationFormData, RegistrationStep } from '../types/Registration.types';

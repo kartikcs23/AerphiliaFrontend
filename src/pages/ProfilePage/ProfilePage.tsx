@@ -1,8 +1,3 @@
-/**
- * Profile Page for Aerophilia 2025
- * User dashboard with registration details, events, and progress
- */
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, School, Calendar, Trophy, Settings, Edit, Download, Upload, Check, Star } from 'lucide-react';

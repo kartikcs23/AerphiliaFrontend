@@ -1,8 +1,3 @@
-/**
- * Application Messages for Aerophilia 2025
- * Centralized message definitions for consistency
- */
-
 export const APP_MESSAGES = {
   // Authentication messages
   AUTH: {

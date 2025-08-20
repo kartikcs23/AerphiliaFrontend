@@ -1,8 +1,3 @@
-/**
- * Registration Types for Aerophilia 2025
- * Defines the structure for registration-related data
- */
-
 export interface RegistrationFormData {
   eventId: string;
   participantType: 'individual' | 'team';

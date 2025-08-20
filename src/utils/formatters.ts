@@ -1,11 +1,3 @@
-/**
- * Formatter Utilities for Aerophilia 2025
- * Common formatting functions for dates, numbers, and text
- */
-
-/**
- * Format date to readable string
- */
 export const formatDate = (date: Date | string): string => {
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   return dateObj.toLocaleDateString('en-IN', {

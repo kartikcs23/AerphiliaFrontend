@@ -1,8 +1,3 @@
-/**
- * Ultra Pro Max Navbar for Aerophilia 2025
- * Futuristic design with neon-glassmorphism, airplane animations, and smooth UX
- */
-
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";

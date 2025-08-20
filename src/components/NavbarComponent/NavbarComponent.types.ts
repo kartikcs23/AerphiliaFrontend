@@ -1,7 +1,3 @@
-/**
- * Navbar Component Types for Aerophilia 2025
- */
-
 export interface NavItem {
   label: string;
   href: string;

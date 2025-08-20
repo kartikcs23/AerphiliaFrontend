@@ -1,8 +1,3 @@
-/**
- * useEventFilter Hook for Aerophilia 2025
- * Custom hook for filtering and searching events
- */
-
 import { useState, useMemo } from 'react';
 import type { Event, EventFilter } from '../types/Event.types';
 

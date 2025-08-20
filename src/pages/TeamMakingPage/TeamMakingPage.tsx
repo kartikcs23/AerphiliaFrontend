@@ -1,11 +1,6 @@
-/**
- * Team Making Page for Aerophilia 2025
- * Connect with participants and form teams for events
- */
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Search, Filter, MessageCircle, UserPlus, Star, MapPin, Calendar, Plus, Send } from 'lucide-react';
+import { Users, Search, Filter, MessageCircle, UserPlus, Star, MapPin, Plus } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import type { TeamMakingPageProps } from './TeamMakingPage.types';
 
@@ -20,14 +15,14 @@ const TeamMakingPage: React.FC<TeamMakingPageProps> = ({ className }) => {
     transition: { duration: 0.6 }
   };
 
-  const staggerContainer = {
-    initial: {},
-    animate: {
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  // const staggerContainer = {
+  //   initial: {},
+  //   animate: {
+  //     transition: {
+  //       staggerChildren: 0.1
+  //     }
+  //   }
+  // };
 
   const events = [
     'Aeromodelling Championship',

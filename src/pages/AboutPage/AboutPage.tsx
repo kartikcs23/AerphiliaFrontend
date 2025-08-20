@@ -1,8 +1,3 @@
-/**
- * About Page for Aerophilia 2025
- * Comprehensive information about the aviation event
- */
-
 import { motion } from 'framer-motion';
 import { Plane, Calendar, MapPin, Users, Award, Clock } from 'lucide-react';
 import type { AboutPageProps } from './AboutPage.types';

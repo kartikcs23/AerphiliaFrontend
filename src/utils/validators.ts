@@ -1,11 +1,3 @@
-/**
- * Validator Utilities for Aerophilia 2025
- * Common validation functions for forms and data
- */
-
-/**
- * Validate email format
- */
 export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
