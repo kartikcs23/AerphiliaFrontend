@@ -409,11 +409,11 @@ const TeamMakingPage: React.FC<TeamMakingPageProps> = ({ className }) => {
   };
 
   return (
-    <div className={`w-full min-h-screen bg-black text-white ${className}`}>
+  <div className={`w-full min-w-screen min-h-screen bg-black text-white ${className}`}>
       {/* Hero Section */}
       <section className="w-full h-96 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-purple-900/30 to-black">
         <motion.div 
-          className="relative z-10 max-w-4xl mx-auto px-6 text-center"
+          className="relative z-10 w-full px-6 text-center"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

@@ -120,7 +120,7 @@ const EventsPage: React.FC<EventsPageProps> = ({ className }) => {
   });
 
   return (
-    <div className={`w-full min-h-screen bg-black text-white ${className}`}>
+    <div className={`min-w-screen min-h-screen bg-black text-white ${className}`}>
       {/* Hero Section */}
       <section className="w-full h-96 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-900/30 to-black">
         <motion.div 

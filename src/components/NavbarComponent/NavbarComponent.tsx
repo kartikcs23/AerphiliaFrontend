@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, Plane, User, LogOut } from "lucide-react";
@@ -82,7 +82,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
-            {NAV_ITEMS.map((item, index) => (
+            {NAV_ITEMS.map((item) => (
               <motion.div
                 key={item.href}
                 whileHover={{ scale: 1.1, y: -2 }}
