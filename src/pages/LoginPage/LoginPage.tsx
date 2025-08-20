@@ -40,7 +40,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ className }) => {
   };
 
   return (
-    <div className={`w-full min-h-screen bg-black text-white ${className}`}>
+    <div className={`min-w-screen min-h-screen bg-black text-white ${className}`}>
       {/* Background Animation */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>

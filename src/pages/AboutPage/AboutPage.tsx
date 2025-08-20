@@ -19,7 +19,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ className }) => {
   };
 
   return (
-    <div className={`w-full min-h-screen bg-black text-white ${className}`}>
+    <div className={`min-w-screen min-h-screen bg-black text-white ${className}`}>
       {/* Hero Section */}
       <section className="w-full h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-black"></div>

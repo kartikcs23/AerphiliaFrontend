@@ -343,10 +343,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
   };
 
   return (
-    <div className={`w-full min-h-screen bg-black text-white ${className}`}>
+    <div className={`min-w-screen min-h-screen bg-black text-white ${className}`}>
       {/* Header */}
       <section className="w-full bg-gray-900/50 py-8">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full px-6">
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center">
               <User className="w-10 h-10 text-gray-400" />
@@ -362,7 +362,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
 
       {/* Navigation Tabs */}
       <section className="w-full bg-gray-800/30 py-4">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full px-6">
           <div className="flex flex-wrap gap-2">
             {tabs.map((tab) => (
               <Button
@@ -385,7 +385,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ className }) => {
 
       {/* Content */}
       <section className="w-full py-12">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="w-full px-6">
           {renderTabContent()}
         </div>
       </section>
