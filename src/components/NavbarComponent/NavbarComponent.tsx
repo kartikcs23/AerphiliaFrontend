@@ -268,10 +268,10 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
               >
                 <Link
                   to={item.href}
-                  className={`relative px-4 py-2 text-sm font-semibold tracking-wide transition-all duration-300 group ${
+                  className={`relative px-6 py-3 text-lg font-black tracking-wider transition-all duration-300 group ${
                     location.pathname === item.href
-                      ? "text-white"
-                      : "text-gray-300 hover:text-white"
+                      ? "text-cyan-200"
+                      : "text-gray-100 hover:text-cyan-100"
                   }`}
                 >
                   {/* HUD Frame */}
@@ -384,13 +384,13 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                   >
                     <Button
                       size="sm"
-                      className="relative rounded-full px-5 py-2 font-semibold text-white border-0 overflow-hidden"
+                      className="relative rounded-full px-6 py-3 font-black text-lg text-white border-0 overflow-hidden"
                       style={{
                         background: `linear-gradient(135deg, ${LEGEND_COLORS.ACCENT} 0%, ${LEGEND_COLORS.PRIMARY} 50%, ${LEGEND_COLORS.SECONDARY} 100%)`,
                         boxShadow: `0 0 20px ${LEGEND_COLORS.GLOW}40, inset 0 1px 0 ${LEGEND_COLORS.ACCENT}50`
                       }}
                     >
-                      <User className="h-4 w-4 mr-2" />
+                      <User className="h-5 w-5 mr-3" />
                       {user?.firstName}
                       
                       {/* Holographic Shimmer */}
@@ -420,12 +420,12 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                     onClick={logout}
                     variant="ghost"
                     size="sm"
-                    className="rounded-full text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-all border border-red-400/20 hover:border-red-400/60"
+                    className="rounded-full text-gray-100 hover:text-red-300 hover:bg-red-500/10 transition-all border border-red-400/20 hover:border-red-400/60"
                     style={{
                       background: `linear-gradient(135deg, transparent, ${LEGEND_COLORS.DARK}30)`,
                     }}
                   >
-                    <LogOut className="h-4 w-4" />
+                    <LogOut className="h-5 w-5" />
                   </Button>
                 </motion.div>
               </motion.div>
@@ -439,7 +439,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-500/10 border border-cyan-400/20 hover:border-cyan-400/60 transition-all"
+                      className="text-lg font-bold text-gray-100 hover:text-cyan-100 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-500/10 border border-cyan-400/20 hover:border-cyan-400/60 transition-all px-6 py-3"
                     >
                       Login
                     </Button>
@@ -454,7 +454,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                   >
                     <Button
                       size="sm"
-                      className="relative rounded-full font-semibold text-white border-0 overflow-hidden"
+                      className="relative rounded-full font-black text-lg text-white border-0 overflow-hidden px-8 py-3"
                       style={{
                         background: `linear-gradient(135deg, ${LEGEND_COLORS.PRIMARY} 0%, ${LEGEND_COLORS.ACCENT} 50%, ${LEGEND_COLORS.SECONDARY} 100%)`,
                         boxShadow: `0 0 25px ${LEGEND_COLORS.PRIMARY}40, inset 0 1px 0 ${LEGEND_COLORS.ACCENT}50`
@@ -496,7 +496,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="relative text-gray-300 hover:text-white p-2 rounded-lg border border-cyan-400/30 hover:border-cyan-400/70 transition-all"
+                className="relative text-gray-100 hover:text-cyan-100 p-3 rounded-lg border border-cyan-400/30 hover:border-cyan-400/70 transition-all"
                 style={{
                   background: `linear-gradient(135deg, ${LEGEND_COLORS.DARK}40, ${LEGEND_COLORS.PRIMARY}20, transparent)`,
                 }}
@@ -507,9 +507,9 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                   transition={{ duration: 0.3 }}
                 >
                   {isMenuOpen ? (
-                    <X className="h-6 w-6" style={{ filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.ACCENT})` }} />
+                    <X className="h-7 w-7" style={{ filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.ACCENT})` }} />
                   ) : (
-                    <Menu className="h-6 w-6" style={{ filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.ACCENT})` }} />
+                    <Menu className="h-7 w-7" style={{ filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.ACCENT})` }} />
                   )}
                 </motion.div>
                 
@@ -604,8 +604,8 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="text-xs text-gray-400 mb-1">NAVIGATION STATUS</div>
-                <div className="text-cyan-400 font-mono text-sm flex items-center space-x-2">
+                <div className="text-sm font-bold text-gray-200 mb-2">NAVIGATION STATUS</div>
+                <div className="text-cyan-300 font-mono text-lg font-black flex items-center space-x-2">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                   <span>SYSTEMS ONLINE</span>
                 </div>
@@ -626,10 +626,10 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
                   >
                     <Link
                       to={item.href}
-                      className={`group relative block px-5 py-4 text-lg font-semibold rounded-lg transition-all duration-300 ${
+                      className={`group relative block px-6 py-5 text-xl font-black tracking-wider rounded-lg transition-all duration-300 ${
                         location.pathname === item.href
-                          ? "text-white"
-                          : "text-gray-300 hover:text-white"
+                          ? "text-cyan-200"
+                          : "text-gray-100 hover:text-cyan-100"
                       }`}
                       style={{
                         background: location.pathname === item.href 

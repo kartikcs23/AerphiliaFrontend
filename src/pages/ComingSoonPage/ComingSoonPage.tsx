@@ -1,322 +1,361 @@
-import { motion } from 'framer-motion';
-import { Rocket, Clock, Star, Sparkles, Mail } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useRef, useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import { Clock } from "lucide-react";
+// import { Zap, Cpu, Atom, Target, Shield, Crown, Flame, Eye } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const ComingSoonPage: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [email, setEmail] = useState('');
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
-  // Set up canvas dimensions
+  // Countdown Timer
   useEffect(() => {
-    const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
+    const launchDate = new Date("2025-10-01T00:00:00").getTime();
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      if (distance <= 0) {
+        clearInterval(timer);
+        return;
+      }
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
       });
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    
-    return () => window.removeEventListener('resize', updateDimensions);
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
-  // Particle animation
-  useEffect(() => {
-    if (!canvasRef.current || dimensions.width === 0) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = dimensions.width;
-    canvas.height = dimensions.height;
-
-    // Create particles
-    type Particle = {
-      x: number;
-      y: number;
-      radius: number;
-      speed: number;
-      opacity: number;
-      direction: number;
-      color: string;
-    };
-    
-    const particles: Particle[] = [];
-    const particleCount = 200;
-    const colors = ['#60a5fa', '#8b5cf6', '#ec4899', '#f0abfc'];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 0.5,
-        speed: Math.random() * 0.8 + 0.2,
-        opacity: Math.random() * 0.7 + 0.3,
-        direction: Math.random() * Math.PI * 2,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
-
-    // Animation loop
-    let animationFrameId: number;
-    
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw and update particles
-      particles.forEach(particle => {
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${particle.color}${Math.floor(particle.opacity * 255).toString(16).padStart(2, '0')}`;
-        ctx.fill();
-        
-        // Move particle
-        particle.x += Math.cos(particle.direction) * particle.speed;
-        particle.y += Math.sin(particle.direction) * particle.speed;
-        
-        // Wrap around screen
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-      });
-      
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [dimensions]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle email submission here
-    console.log('Email submitted:', email);
-    setEmail('');
-  };
-
   return (
-    <div className="min-h-screen min-w-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-black via-blue-950 to-purple-950 text-white relative overflow-hidden">
-      {/* Animated background with particles */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 w-full h-full -z-10"
-      />
-      
-      {/* Enhanced animated background */}
+    <div className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-slate-950 to-indigo-950">
+      {/* Ultra Futuristic Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black via-blue-950/30 to-purple-950/20"></div>
-        <motion.div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        ></motion.div>
-        <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.5, 0.3, 0.5]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        ></motion.div>
+        {/* Grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(0,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.1)_1px,transparent_1px)] bg-[length:80px_80px]"
+        />
         
-        {/* Floating stars */}
-        {[...Array(20)].map((_, i) => (
+        {/* Floating geometric shapes */}
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute text-yellow-200"
+            className="absolute w-32 h-32 border-2 border-cyan-400/30 rounded-full"
             style={{
-              top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -20, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-              rotate: [0, 180, 360]
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 0.8, 0.3],
+              rotate: [0, 360],
             }}
             transition={{
-              duration: Math.random() * 5 + 5,
+              duration: 10 + i * 2,
               repeat: Infinity,
-              delay: Math.random() * 2
+              ease: "linear"
             }}
-          >
-            <Star size={Math.random() * 10 + 5} fill="currentColor" />
-          </motion.div>
+          />
+        ))}
+
+        {/* Energy particles */}
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [-20, -100, -20],
+              opacity: [0, 1, 0],
+              scale: [0.5, 1.5, 0.5],
+            }}
+            transition={{
+              duration: 6 + Math.random() * 4,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut"
+            }}
+          />
         ))}
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 50 }}
+      {/* Ultra Legend Main Content */}
+      <motion.div 
+        className="flex flex-col items-center justify-center gap-12 z-10 p-4 max-w-7xl mx-auto text-center"
+        initial={{ opacity: 0, scale: 0.5, y: 100 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="flex flex-col items-center justify-center gap-8 z-10 p-4 max-w-4xl mx-auto"
+        transition={{ duration: 1.5, ease: "easeOut" }}
       >
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, -5, 0]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="relative"
+        {/* Legendary Icon Array */}
+        {/* <motion.div 
+          className="flex items-center justify-center gap-8 mb-8"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 1 }}
         >
-          <Rocket className="w-24 h-24 text-blue-400" />
-          <motion.div 
-            className="absolute -top-2 -right-2"
-            animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            <Sparkles className="w-8 h-8 text-yellow-400" fill="currentColor" />
-          </motion.div>
-        </motion.div>
-        
-        {/* Animated Coming Soon Text with Cutting Effect */}
-        <div className="relative" ref={textRef}>
+          {[Crown, Shield, Zap, Atom, Target, Cpu, Eye, Flame].map((Icon, index) => (
+            <motion.div
+              key={index}
+              className="p-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-xl border border-cyan-400/30"
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
+                boxShadow: [
+                  "0 0 20px rgba(0, 255, 255, 0.3)",
+                  "0 0 40px rgba(0, 255, 255, 0.8)",
+                  "0 0 20px rgba(0, 255, 255, 0.3)"
+                ]
+              }}
+              transition={{
+                duration: 3 + index * 0.5,
+                repeat: Infinity,
+                delay: index * 0.2,
+                ease: "easeInOut"
+              }}
+            >
+              <Icon className="w-8 h-8 text-cyan-400" />
+            </motion.div>
+          ))}
+        </motion.div> */}
+
+        {/* Coming Soon Text */}
+        <div className="relative mb-8">
           <motion.h1 
-            className="text-6xl md:text-8xl lg:text-9xl font-black text-center mb-8 tracking-tighter"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-[14rem] md:text-[22rem] lg:text-[32rem] xl:text-[40rem] font-black tracking-tighter leading-none"
+            initial={{ opacity: 0, y: 100, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
           >
+            {/* Legendary gradient text with multiple effects */}
             <span className="relative inline-block">
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent opacity-100">
-                Coming Soon
-              </span>
-              <span className="text-white opacity-10 blur-md">Coming Soon</span>
+              {/* Main gradient text */}
+              <motion.span 
+                className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent"
+                animate={{
+                  backgroundImage: [
+                    "linear-gradient(45deg, #00ffff, #0080ff, #8000ff)",
+                    "linear-gradient(45deg, #ff00ff, #00ffff, #ffff00)",
+                    "linear-gradient(45deg, #00ff00, #ff00ff, #0080ff)",
+                    "linear-gradient(45deg, #00ffff, #0080ff, #8000ff)"
+                  ]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                COMING
+              </motion.span>
+              
+              {/* Glow effect */}
+              <motion.span 
+                className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent blur-md opacity-70"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                COMING
+              </motion.span>
             </span>
           </motion.h1>
-          
-          {/* Cutting effect elements */}
-          <motion.div 
-            className="absolute top-1/4 left-0 w-full h-2 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-          />
-          <motion.div 
-            className="absolute top-2/3 right-0 w-1/2 h-1 bg-gradient-to-l from-transparent via-pink-400 to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-          />
-          <motion.div 
-            className="absolute top-1/2 -left-4 w-3 h-16 bg-blue-400 rounded-full"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-          />
-          <motion.div 
-            className="absolute bottom-1/4 -right-4 w-3 h-12 bg-pink-400 rounded-full"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.7, duration: 0.5 }}
-          />
-        </div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 1 }}
-          className="text-center"
-        >
-          <p className="text-xl md:text-2xl text-gray-300 max-w-2xl text-center mb-8 leading-relaxed">
-            We're crafting something <span className="text-blue-300 font-semibold">extraordinary</span>. 
-            A revolutionary experience that will change the way you think about technology.
-          </p>
-        </motion.div>
-        
-        <motion.div 
-          className="flex items-center gap-4 p-4 bg-black/30 rounded-xl backdrop-blur-sm border border-white/10"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.9, duration: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-        >
-          <motion.div
+
+          <motion.h1 
+            className="text-[14rem] md:text-[22rem] lg:text-[32rem] xl:text-[40rem] font-black tracking-tighter leading-none mt-4"
+            initial={{ opacity: 0, y: 100, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.7, duration: 1.2, ease: "easeOut" }}
+          >
+            <span className="relative inline-block">
+              <motion.span 
+                className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 bg-clip-text text-transparent"
+                animate={{
+                  backgroundImage: [
+                    "linear-gradient(45deg, #ffff00, #ff8000, #ff0000)",
+                    "linear-gradient(45deg, #ff0080, #ffff00, #00ff80)",
+                    "linear-gradient(45deg, #8000ff, #ff0080, #ff8000)",
+                    "linear-gradient(45deg, #ffff00, #ff8000, #ff0000)"
+                  ]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+              >
+                SOON
+              </motion.span>
+              
+              <motion.span 
+                className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 bg-clip-text text-transparent blur-md opacity-70"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+              >
+                SOON
+              </motion.span>
+            </span>
+          </motion.h1>
+
+          {/* Epic text decorations */}
+          {/* <motion.div
+            className="absolute -top-8 -left-8"
             animate={{ rotate: 360 }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           >
-            <Clock className="w-8 h-8 text-purple-400" />
+            <div className="text-6xl">⚡</div>
+          </motion.div> */}
+          
+          {/* <motion.div
+            className="absolute -top-8 -right-8"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="text-6xl">🚀</div>
+          </motion.div> */}
+
+          {/* <motion.div
+            className="absolute -bottom-8 left-1/2 -translate-x-1/2"
+            animate={{ 
+              y: [0, -20, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="text-6xl">✨</div>
+          </motion.div> */}
+        </div>
+
+        {/* Legendary subtitle with emojis */}
+        {/* <motion.div
+          className="text-2xl md:text-4xl lg:text-5xl font-bold text-cyan-300 mb-8 flex items-center gap-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+        >
+          <span className="text-4xl">🛸</span>
+          <span>AEROPHILIA</span>
+          <span className="text-4xl">2025</span>
+          <span className="text-4xl">🌟</span>
+        </motion.div> */}
+
+        {/* Ultra Pro Countdown */}
+        <motion.div
+          className="relative p-8 bg-gradient-to-br from-black/50 via-cyan-900/20 to-purple-900/30 rounded-3xl backdrop-blur-xl border border-cyan-400/30 shadow-2xl"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+        >
+          {/* Legendary countdown header */}
+          <motion.div 
+            className="flex items-center justify-center gap-4 mb-6"
+            animate={{ 
+              scale: [1, 1.05, 1],
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            >
+              <Clock className="w-12 h-12 text-cyan-400" />
+            </motion.div>
+            <span className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              LAUNCHING IN
+            </span>
+            {/* <div className="text-4xl">⏰</div> */}
           </motion.div>
-          <span className="text-lg md:text-xl font-semibold text-blue-300">Launching in</span>
-          <div className="flex gap-2">
-            <div className="bg-blue-900/70 px-3 py-1 rounded-lg text-blue-200 font-mono">14</div>
-            <div className="bg-purple-900/70 px-3 py-1 rounded-lg text-purple-200 font-mono">08</div>
-            <div className="bg-pink-900/70 px-3 py-1 rounded-lg text-pink-200 font-mono">23</div>
+
+          {/* Epic countdown numbers */}
+          <div className="flex gap-6 justify-center">
+            {Object.entries(timeLeft).map(([unit, value], index) => (
+              <motion.div 
+                key={unit}
+                className="relative group"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.7 + index * 0.1, duration: 0.5 }}
+              >
+                <motion.div
+                  className="relative bg-gradient-to-br from-cyan-500/20 to-purple-600/20 p-6 rounded-2xl backdrop-blur-xl border border-cyan-400/30"
+                  animate={{
+                    boxShadow: [
+                      "0 0 20px rgba(0, 255, 255, 0.3)",
+                      "0 0 40px rgba(0, 255, 255, 0.6)",
+                      "0 0 20px rgba(0, 255, 255, 0.3)"
+                    ]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.5
+                  }}
+                >
+                  <div className="text-4xl md:text-6xl font-mono font-black text-cyan-300 text-center mb-2">
+                    {value.toString().padStart(2, '0')}
+                  </div>
+                  <div className="text-sm md:text-lg font-semibold text-cyan-400 uppercase tracking-wider text-center">
+                    {unit}
+                  </div>
+                  
+                  {/* Particle effects on each number */}
+                  <motion.div
+                    className="absolute -top-2 -right-2"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      rotate: [0, 180, 360]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      delay: index * 0.3
+                    }}
+                  >
+                    {/* <div className="text-2xl">💫</div> */}
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
-        
-        {/* Email notification form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+
+        {/* Epic call to action */}
+        {/* <motion.div
+          className="text-xl md:text-2xl font-semibold text-cyan-300 flex items-center gap-4"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
-          className="w-full max-w-md mt-6"
+          transition={{ delay: 2, duration: 0.8 }}
         >
-          <p className="text-gray-400 text-center mb-4">Get notified when we launch</p>
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-            <div className="relative flex-1">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email address"
-                className="w-full pl-10 pr-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
-                required
-              />
-            </div>
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg shadow-lg hover:from-blue-500 hover:to-purple-500 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <Sparkles size={18} />
-              Notify Me
-            </motion.button>
-          </form>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="mt-8"
-        >
-          <Link 
-            to="/" 
-            className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600/30 to-purple-600/30 hover:from-blue-500/40 hover:to-purple-500/40 text-white font-bold shadow-lg transition-all duration-300 flex items-center gap-2 border border-white/10 backdrop-blur-sm"
-          >
-            <span>←</span>
-            Back to Home
-          </Link>
-        </motion.div>
+          <span className="text-3xl">🎯</span>
+          <span>GET READY FOR THE ULTIMATE TECH EXPERIENCE</span>
+          <span className="text-3xl">🎯</span>
+        </motion.div> */}
+
       </motion.div>
     </div>
   );
