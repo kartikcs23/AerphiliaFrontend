@@ -1,15 +1,14 @@
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Sparkles, Zap, Star } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Sparkles, Zap } from 'lucide-react';
+import {  useRef } from 'react';
 import type { EventCategoriesSectionProps } from './EventCategoriesSection.types';
 
-const eventDetails = [
-  // ...event objects here (copy from your original file)...
-];
+// const eventDetails = [
+//   // ...event objects here (copy from your original file)...
+// ];
 
 const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ className }) => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  // const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   const headerY = useTransform(scrollYProgress, [0, 1], [100, -100]);

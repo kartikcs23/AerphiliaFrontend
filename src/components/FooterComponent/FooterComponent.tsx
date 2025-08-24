@@ -14,6 +14,7 @@ import {
   Heart
 } from 'lucide-react';
 import type { FooterComponentProps, FooterSection } from './FooterComponent.types';
+import AerophiliaLogo from '../../assets/Aerophilia-white.svg';
 
 const FOOTER_SECTIONS: FooterSection[] = [
   {
@@ -104,9 +105,8 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
                 >
                   <Plane className="h-7 w-7 text-white drop-shadow-lg" />
                 </motion.div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent drop-shadow-lg">
-                  Aerophilia 2025
-                </span>
+                {/* Aerophilia White Logo */}
+                <img src={AerophiliaLogo} alt="Aerophilia Logo" className="h-10 w-auto" />
               </div>
               
               <p className="text-gray-300 text-base leading-relaxed max-w-md">
@@ -199,24 +199,6 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
             </div>
 
             {/* Newsletter Signup */}
-            <div className="w-full lg:max-w-md">
-              <span className="text-gray-300 font-medium block mb-4">Stay updated with our latest news:</span>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 text-sm bg-gradient-to-br from-gray-800/80 to-blue-900/30 border border-blue-500/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 shadow-md"
-                />
-                <motion.button 
-                  whileHover={{ scale: 1.08, background: 'linear-gradient(90deg,#2563eb,#06b6d4)' }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 text-sm bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 flex items-center justify-center gap-2 font-medium shadow-lg"
-                >
-                  <Send className="h-4 w-4" />
-                  Subscribe
-                </motion.button>
-              </div>
-            </div>
           </div>
         </motion.div>
 
@@ -234,17 +216,7 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
             <span>Organized by Team Challengers</span>
           </div>
           
-          <div className="flex items-center gap-3">
-            <span>Crafted with</span>
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-red-500 flex items-center drop-shadow-lg"
-            >
-              <Heart className="h-4 w-4 fill-current" />
-            </motion.div>
-            <span>for the innovators of tomorrow</span>
-          </div>
+
         </motion.div>
       </div>
     </footer>

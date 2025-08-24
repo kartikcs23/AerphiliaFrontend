@@ -184,3 +184,45 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Radial Gradient Utilities for BOOM Effects */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.from-orange-500\/30 {
+  --tw-gradient-from: rgba(249, 115, 22, 0.3);
+  --tw-gradient-to: rgba(249, 115, 22, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-red-500\/20 {
+  --tw-gradient-to: rgba(239, 68, 68, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), rgba(239, 68, 68, 0.2), var(--tw-gradient-to);
+}
+
+.from-white {
+  --tw-gradient-from: rgb(255, 255, 255);
+  --tw-gradient-to: rgba(255, 255, 255, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-yellow-300 {
+  --tw-gradient-to: rgba(253, 224, 71, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), rgb(253, 224, 71), var(--tw-gradient-to);
+}
+
+.to-orange-500 {
+  --tw-gradient-to: rgb(249, 115, 22);
+}
+
+.from-orange-400\/40 {
+  --tw-gradient-from: rgba(251, 146, 60, 0.4);
+  --tw-gradient-to: rgba(251, 146, 60, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-red-500\/20 {
+  --tw-gradient-to: rgba(239, 68, 68, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), rgba(239, 68, 68, 0.2), var(--tw-gradient-to);
+}

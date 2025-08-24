@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Wrench, Trophy, Eye, ArrowRight, Sparkles, Zap } from 'lucide-react';
 import type { EventCategoriesSectionProps } from './EventCategoriesSection.types';
 
@@ -70,6 +70,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
       <div className="absolute inset-0 -z-10">
         {/* Primary dark gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-black" />
+        
         {/* Animated geometric patterns */}
         <div className="absolute inset-0 opacity-20">
           {[...Array(6)].map((_, i) => (
@@ -121,7 +122,14 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
 
         {/* Grid overlay */}
         <div 
-          className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(62,198,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(62,198,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]"
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(62, 198, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(62, 198, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
         />
       </div>
 
@@ -149,6 +157,26 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
             <span className="text-cyan-400 text-lg font-semibold tracking-wider">EVENT CATEGORIES</span>
             <Sparkles className="w-8 h-8 text-cyan-400" />
           </motion.div>
+
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6">
+            <span className="bg-gradient-to-r from-white via-cyan-200 to-white bg-clip-text text-transparent">
+              Choose Your
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+              Legendary Path
+            </span>
+          </h2>
+
+          <motion.p 
+            className="text-xl md:text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            Embark on an extraordinary aerospace journey through immersive workshops, 
+            competitive challenges, and groundbreaking exhibitions that will define the future of flight.
+          </motion.p>
         </motion.div>
 
         {/* Legendary Event Cards Grid */}
@@ -158,18 +186,15 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
             const isOtherHovered = hoveredCard !== null && hoveredCard !== category.id;
             const IconComponent = category.icon;
 
-            // Only the hovered card gets expanded height, others stay at default small height
-            const cardHeight = isHovered ? 'min-h-[520px] h-auto' : 'h-[320px]';
-
             return (
               <motion.div
                 key={category.id}
-                className={`relative group ${cardHeight}`}
+                className="relative group"
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ 
                   opacity: 1, 
                   y: 0,
-                  scale: isHovered ? 1.05 : 1,
+                  scale: isOtherHovered ? 0.9 : isHovered ? 1.05 : 1,
                   z: isHovered ? 50 : 0
                 }}
                 transition={{ 
@@ -200,7 +225,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                 />
 
                 {/* Main Card Container */}
-                <div className={`relative h-full backdrop-blur-xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/20 rounded-3xl p-8 overflow-hidden group-hover:border-white/40 transition-all duration-700 ${cardHeight}`}>
+                <div className="relative h-full backdrop-blur-xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/20 rounded-3xl p-8 overflow-hidden group-hover:border-white/40 transition-all duration-700">
                   
                   {/* Animated Border */}
                   <motion.div
@@ -211,7 +236,6 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                         category.glowColor === 'purple' ? 'rgba(168, 85, 247, 0.3)' : 
                         'rgba(52, 211, 153, 0.3)'
                       }, transparent)`,
-
                       mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                       maskComposite: 'subtract',
                       padding: '2px'
@@ -224,7 +248,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
 
                   {/* Floating Corner Accents */}
                   <div className={`absolute top-4 left-4 w-3 h-3 rounded-full bg-${category.glowColor}-400 opacity-60 animate-pulse`} />
-                  <div className={`absolute bottom-4 right-4 w-2 h-2 rounded-full bg-${category.glowColor}-500 opacity-80 animate-pulse delay-[500ms]`} />
+                  <div className={`absolute bottom-4 right-4 w-2 h-2 rounded-full bg-${category.glowColor}-500 opacity-80 animate-pulse`} style={{ animationDelay: '0.5s' }} />
 
                   {/* Icon Section */}
                   <motion.div
@@ -247,7 +271,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                   </motion.div>
 
                   {/* Content Section */}
-                  <div className="text-center space-y-6 overflow-y-auto max-h-[480px]">
+                  <div className="text-center space-y-6">
                     <motion.h3 
                       className="text-3xl font-bold text-white mb-4"
                       animate={isHovered ? {
