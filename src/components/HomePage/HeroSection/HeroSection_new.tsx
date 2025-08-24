@@ -65,8 +65,8 @@ function UltraPremiumAirplane() {
         <mesh position={[0, 0.3, -1.2]} rotation={[0, 0, 0]}>
           <boxGeometry args={[0.6, 0.8, 0.1]} />
           <MeshWobbleMaterial 
-            color="#0057b7" 
-            emissive="#0057b7" 
+            color="#ff6f1a" 
+            emissive="#ff6f1a" 
             emissiveIntensity={0.4}
             factor={0.08}
             speed={1.8}
@@ -111,10 +111,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
     restDelta: 0.001
   });
 
-  const y = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(smoothProgress, [0, 1], [1, 0.3]);
-  const titleY = useTransform(smoothProgress, [0, 1], [0, -100]);
-  const contentY = useTransform(smoothProgress, [0, 1], [0, -80]);
+  const y = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(smoothProgress, [0, 1], [1, 0]);
+  const scale = useTransform(smoothProgress, [0, 1], [1, 0.8]);
+  const titleY = useTransform(smoothProgress, [0, 1], [0, -200]);
+  const contentY = useTransform(smoothProgress, [0, 1], [0, -150]);
 
   // Mouse tracking
   useEffect(() => {
@@ -130,11 +131,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
   }, []);
 
   // Event details with enhanced data
-  const eventDate = new Date('2025-10-23');
+  const eventDate = new Date('2025-03-15');
   const eventStats = [
     { 
       icon: Calendar, 
-      label: 'October 23-25, 2025', 
+      label: 'March 15-17, 2025', 
       description: '3 Days of Pure Innovation',
       gradient: 'from-[#3ec6ff] to-[#0057b7]'
     },
@@ -142,26 +143,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
       icon: MapPin, 
       label: 'Sahyadri College', 
       description: 'Mangalore, Karnataka',
-      gradient: 'from-[#0057b7] to-[#1e40af]'
+      gradient: 'from-[#ff6f1a] to-[#3ec6ff]'
     },
     { 
       icon: Users, 
       label: '500+ Participants', 
       description: 'Elite Tech Innovators',
-      gradient: 'from-[#1e40af] to-[#3ec6ff]'
+      gradient: 'from-[#0057b7] to-[#ff6f1a]'
     },
     { 
       icon: Trophy, 
       label: '₹5L+ Prize Pool', 
       description: 'Life-Changing Rewards',
-      gradient: 'from-[#3ec6ff] to-[#0057b7]'
+      gradient: 'from-[#3ec6ff] to-[#ff6f1a]'
     },
   ];
 
   return (
     <motion.section 
       ref={containerRef}
-      style={{ y, opacity }}
+      style={{ y, opacity, scale }}
       className={`relative min-h-screen flex items-center justify-center overflow-hidden ${className}`}
     >
       {/* Ultra Premium 3D Background */}
@@ -172,7 +173,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         >
           <ambientLight intensity={0.4} />
           <pointLight position={[10, 10, 10]} intensity={1.5} color="#3ec6ff" />
-          <pointLight position={[-10, -10, -10]} color="#0057b7" intensity={1.2} />
+          <pointLight position={[-10, -10, -10]} color="#ff6f1a" intensity={1.2} />
           <pointLight position={[0, 10, -10]} color="#0057b7" intensity={0.8} />
           
           <UltraPremiumAirplane />
@@ -225,7 +226,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
       </motion.div>
       
       <motion.div
-        className="absolute bottom-20 right-20 text-[#0057b7]/40"
+        className="absolute bottom-20 right-20 text-[#ff6f1a]/40"
         animate={{ 
           rotate: -360,
           scale: [1.1, 1, 1.1],
@@ -266,7 +267,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
-              <div className="h-12 w-0.5 bg-gradient-to-b from-[#3ec6ff] to-[#0057b7]"></div>
+              <div className="h-12 w-0.5 bg-gradient-to-b from-[#3ec6ff] to-[#ff6f1a]"></div>
               <div className="text-white/80 font-light">
                 <div className="text-lg">Sahyadri College</div>
                 <div className="text-sm">Innovation Hub</div>
@@ -281,7 +282,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               transition={{ duration: 1.5, delay: 0.5 }}
             >
               <motion.span 
-                className="bg-gradient-to-r from-[#3ec6ff] via-white to-[#0057b7] bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-[#3ec6ff] via-white to-[#ff6f1a] bg-clip-text text-transparent"
                 animate={{ backgroundPosition: ['0%', '100%', '0%'] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
@@ -326,7 +327,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
                   whileTap={{ scale: 0.95 }}
                   className="group relative px-12 py-6 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] text-white font-bold text-xl rounded-2xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#0057b7] to-[#3ec6ff] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#ff6f1a] to-[#3ec6ff] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative flex items-center space-x-3">
                     <span>Register Now</span>
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
@@ -354,6 +355,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
+            {/* Premium Countdown */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.8 }}
+              className="relative p-8 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl border border-white/20 rounded-3xl"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/10 to-[#ff6f1a]/10 rounded-3xl"></div>
+              <div className="relative">
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">
+                  Event Countdown
+                </h3>
+                <CountdownTimer targetDate={eventDate} />
+              </div>
+            </motion.div>
+
             {/* Premium Event Stats */}
             <div className="grid grid-cols-2 gap-6">
               {eventStats.map((stat, index) => (
@@ -441,4 +458,3 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
 };
 
 export default HeroSection;
-

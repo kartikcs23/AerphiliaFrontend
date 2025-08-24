@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Sparkles, Zap, Calendar, Users, Trophy, MapPin, Plane, Cpu, Rocket, Star, ArrowRight } from 'lucide-react';
+import { Sparkles, Zap, Target, Calendar, Users, Trophy, MapPin, Plane, Cpu, Rocket, Star, ArrowRight, ExternalLink } from 'lucide-react';
 import { useState, useRef } from 'react';
 import type { EventCategoriesSectionProps } from './EventCategoriesSection.types';
 
@@ -55,7 +55,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
       prize: "₹2,00,000",
       location: "Indoor Tech Arena",
       icon: <Cpu className="w-20 h-20" />,
-      gradient: "from-[#0057b7] to-[#1e40af]",
+      gradient: "from-[#0057b7] to-[#3ec6ff]",
       accentColor: "#0057b7",
       requirements: ["Programming Skills", "Electronics Knowledge", "Mechanical Design", "AI/ML Basics"],
       highlights: ["Real-time Challenges", "Industry Workshops", "Tech Expo", "Networking Session"],
@@ -80,8 +80,8 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
       prize: "₹2,00,000",
       location: "Innovation Hub Center",
       icon: <Rocket className="w-20 h-20" />,
-      gradient: "from-[#1e40af] to-[#3ec6ff]",
-      accentColor: "#1e40af",
+      gradient: "from-[#0057b7] to-[#ff6f1a]",
+      accentColor: "#0057b7",
       requirements: ["Working Prototype", "Research Documentation", "Technical Presentation", "Demo Setup"],
       highlights: ["Industry Expert Panel", "Investment Opportunities", "Patent Support", "Media Spotlight"],
       sponsors: ["AeroInnovate", "TechVentures", "Future Flight Foundation"],
@@ -95,16 +95,16 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
   ];
 
   return (
-    <section ref={containerRef} className={`w-full py-20 relative overflow-hidden ${className}`}>
+    <section ref={containerRef} className={`w-full py-32 relative overflow-hidden ${className}`}>
       {/* Ultra Premium Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0057b7]/5 via-[#1e40af]/10 to-[#3ec6ff]/5"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(62,198,255,0.1),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(0,87,183,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/5 via-[#0057b7]/10 to-black/20"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(62,198,255,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,111,26,0.1),transparent_50%)]"></div>
         
         {/* Ultra floating elements */}
         <motion.div
-          className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-[#3ec6ff]/15 to-transparent rounded-full blur-3xl"
+          className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-[#3ec6ff]/20 to-transparent rounded-full blur-3xl"
           animate={{
             x: [0, 200, 0],
             y: [0, -100, 0],
@@ -114,7 +114,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
           transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-[#0057b7]/10 to-transparent rounded-full blur-3xl"
+          className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-[#ff6f1a]/15 to-transparent rounded-full blur-3xl"
           animate={{
             x: [0, -150, 0],
             y: [0, 80, 0],
@@ -125,7 +125,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
         />
       </div>
 
-      <div className="w-full px-6 sm:px-8 lg:px-12 relative max-w-7xl mx-auto">
+      <div className="w-full px-4 sm:px-6 lg:px-8 relative">
         {/* Premium Header with Parallax */}
         <motion.div
           style={{ y: headerY }}
@@ -133,11 +133,11 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16 relative"
+          className="text-center mb-20 relative"
         >
           {/* Floating premium icons */}
           <motion.div
-            className="absolute -top-16 left-1/2 transform -translate-x-1/2"
+            className="absolute -top-20 left-1/2 transform -translate-x-1/2"
             animate={{ 
               rotate: 360,
               y: [0, -20, 0],
@@ -149,10 +149,10 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
               scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
             }}
           >
-            <Sparkles size={80} className="text-[#3ec6ff]/40" />
+            <Sparkles size={100} className="text-[#3ec6ff]/30" />
           </motion.div>
           <motion.div
-            className="absolute -bottom-16 right-1/2 transform translate-x-1/2"
+            className="absolute -bottom-20 right-1/2 transform translate-x-1/2"
             animate={{ 
               rotate: -360,
               y: [0, 20, 0],
@@ -164,18 +164,18 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
               scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
             }}
           >
-            <Zap size={80} className="text-[#0057b7]/40" />
+            <Zap size={100} className="text-[#ff6f1a]/30" />
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6">
-            Event <span className="bg-gradient-to-r from-[#3ec6ff] via-[#0057b7] to-[#1e40af] bg-clip-text text-transparent">Categories</span>
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
+            Event <span className="bg-gradient-to-r from-[#3ec6ff] via-[#0057b7] to-[#ff6f1a] bg-clip-text text-transparent">Categories</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Explore our legendary events, each designed to inspire innovation and challenge the best minds in aerospace, robotics, and coding.
           </p>
           
           <motion.div
-            className="h-1 w-24 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] rounded-full mx-auto mt-8"
+            className="h-1 w-24 bg-gradient-to-r from-[#3ec6ff] to-[#ff6f1a] rounded-full mx-auto mt-8"
             animate={{
               width: [96, 128, 96],
               opacity: [0.7, 1, 0.7]
@@ -191,7 +191,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
         {/* Ultra Premium Event Cards Grid with Full-Width Hover */}
         <motion.div
           style={{ y: cardsY }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
         >
           {eventDetails.map((event, index) => (
             <motion.div
@@ -210,32 +210,40 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
             >
               {/* Normal Card View */}
               <motion.div
-                className="relative bg-gradient-to-br from-[#0057b7]/20 via-[#1e40af]/15 to-[#3ec6ff]/10 backdrop-blur-xl border border-[#3ec6ff]/30 rounded-3xl p-6 h-[480px] overflow-hidden shadow-2xl shadow-[#0057b7]/20"
+                className="relative bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8 h-[500px] overflow-hidden shadow-2xl"
                 whileHover={{ 
-                  scale: 1.03,
-                  y: -8,
+                  scale: 1.05,
+                  y: -10,
                   transition: { duration: 0.4, ease: "easeOut" }
+                }}
+                style={{
+                  background: `linear-gradient(135deg, ${event.gradient.replace('from-', '').replace('to-', ', ')})`,
+                  backgroundOpacity: 0.1
                 }}
               >
                 {/* Premium Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/15 via-transparent to-[#0057b7]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/10 via-transparent to-[#ff6f1a]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
                 
                 {/* Animated Background Pattern */}
                 <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px, rgba(62,198,255,0.8) 1px, transparent_0)] bg-[length:30px_30px]"></div>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px, rgba(255,255,255,0.8) 1px, transparent_0)] bg-[length:50px_50px]"></div>
                 </div>
 
                 {/* Event Icon */}
                 <motion.div 
                   className="flex justify-center mb-6"
                   whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 5,
+                    scale: 1.2, 
+                    rotate: 10,
                     transition: { duration: 0.3 }
                   }}
                 >
                   <div 
-                    className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl bg-gradient-to-br from-[#3ec6ff] to-[#0057b7] text-white shadow-[#3ec6ff]/30"
+                    className="w-24 h-24 rounded-2xl flex items-center justify-center shadow-2xl"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${event.gradient.replace('from-', '').replace('to-', ', ')})`,
+                      color: 'white'
+                    }}
                   >
                     {event.icon}
                   </div>
@@ -243,10 +251,10 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
 
                 {/* Event Content */}
                 <div className="text-center relative z-10">
-                  <h3 className="text-xl font-black text-white mb-2">
+                  <h3 className="text-2xl font-black text-white mb-2">
                     {event.title}
                   </h3>
-                  <p className="text-[#3ec6ff] font-semibold mb-4 text-base">
+                  <p className="text-[#ff6f1a] font-semibold mb-4 text-lg">
                     {event.subtitle}
                   </p>
                   <p className="text-gray-300 text-sm mb-6 leading-relaxed">
@@ -254,21 +262,21 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                   </p>
 
                   {/* Event Stats */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    <div className="bg-[#0057b7]/20 rounded-xl p-3 backdrop-blur-sm border border-[#3ec6ff]/20">
-                      <Calendar className="w-4 h-4 text-[#3ec6ff] mx-auto mb-1" />
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-white/5 rounded-xl p-3 backdrop-blur-sm">
+                      <Calendar className="w-5 h-5 text-[#3ec6ff] mx-auto mb-1" />
                       <p className="text-xs text-gray-300">{event.date}</p>
                     </div>
-                    <div className="bg-[#0057b7]/20 rounded-xl p-3 backdrop-blur-sm border border-[#3ec6ff]/20">
-                      <Trophy className="w-4 h-4 text-[#3ec6ff] mx-auto mb-1" />
+                    <div className="bg-white/5 rounded-xl p-3 backdrop-blur-sm">
+                      <Trophy className="w-5 h-5 text-[#ff6f1a] mx-auto mb-1" />
                       <p className="text-xs text-gray-300">{event.prize}</p>
                     </div>
-                    <div className="bg-[#0057b7]/20 rounded-xl p-3 backdrop-blur-sm border border-[#3ec6ff]/20">
-                      <Users className="w-4 h-4 text-[#3ec6ff] mx-auto mb-1" />
+                    <div className="bg-white/5 rounded-xl p-3 backdrop-blur-sm">
+                      <Users className="w-5 h-5 text-[#3ec6ff] mx-auto mb-1" />
                       <p className="text-xs text-gray-300">{event.participants}</p>
                     </div>
-                    <div className="bg-[#0057b7]/20 rounded-xl p-3 backdrop-blur-sm border border-[#3ec6ff]/20">
-                      <MapPin className="w-4 h-4 text-[#3ec6ff] mx-auto mb-1" />
+                    <div className="bg-white/5 rounded-xl p-3 backdrop-blur-sm">
+                      <MapPin className="w-5 h-5 text-[#ff6f1a] mx-auto mb-1" />
                       <p className="text-xs text-gray-300">{event.location}</p>
                     </div>
                   </div>
@@ -276,15 +284,15 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                   {/* CTA Button */}
                   <Link to={`/events/${event.id}`}>
                     <motion.button
-                      className="w-full py-3 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden shadow-[#3ec6ff]/30"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      className="w-full py-3 bg-gradient-to-r from-[#3ec6ff] to-[#ff6f1a] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span className="relative z-10 flex items-center justify-center">
                         Learn More <ArrowRight className="ml-2 w-4 h-4" />
                       </span>
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-[#0057b7] to-[#1e40af] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 bg-gradient-to-r from-[#ff6f1a] to-[#3ec6ff] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         initial={{ x: '-100%' }}
                         whileHover={{ x: '0%' }}
                         transition={{ duration: 0.3 }}
@@ -341,13 +349,17 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                         >
                           <div className="flex items-center mb-6">
                             <div 
-                              className="w-16 h-16 rounded-xl flex items-center justify-center mr-4 bg-gradient-to-br from-blue-400 to-blue-600 text-white"
+                              className="w-16 h-16 rounded-xl flex items-center justify-center mr-4"
+                              style={{ 
+                                background: `linear-gradient(135deg, ${event.gradient.replace('from-', '').replace('to-', ', ')})`,
+                                color: 'white'
+                              }}
                             >
                               {event.icon}
                             </div>
                             <div>
                               <h2 className="text-4xl font-black text-white">{event.title}</h2>
-                              <p className="text-[#0057b7] font-semibold text-xl">{event.subtitle}</p>
+                              <p className="text-[#ff6f1a] font-semibold text-xl">{event.subtitle}</p>
                             </div>
                           </div>
 
@@ -373,10 +385,10 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
 
                           {/* Highlights */}
                           <div>
-                            <h4 className="font-semibold text-lg mb-3 text-[#3ec6ff]">Highlights:</h4>
+                            <h4 className="font-semibold text-lg mb-3 text-[#ff6f1a]">Highlights:</h4>
                             <div className="flex flex-wrap gap-2">
                               {event.highlights.map((highlight, i) => (
-                                <span key={i} className="text-sm bg-[#3ec6ff]/20 px-3 py-1 rounded-full border border-[#3ec6ff]/30">
+                                <span key={i} className="text-sm bg-[#ff6f1a]/20 px-3 py-1 rounded-full border border-[#ff6f1a]/30">
                                   {highlight}
                                 </span>
                               ))}
@@ -416,7 +428,7 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                             <div className="space-y-2">
                               {event.sponsors.map((sponsor, i) => (
                                 <div key={i} className="text-gray-300 flex items-center">
-                                  <Star className="w-4 h-4 text-[#3ec6ff] mr-2" fill="currentColor" />
+                                  <Star className="w-4 h-4 text-[#ff6f1a] mr-2" fill="currentColor" />
                                   {sponsor}
                                 </div>
                               ))}
@@ -426,9 +438,9 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
                           {/* Action Button */}
                           <Link to={`/events/${event.id}`}>
                             <motion.button
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              className="w-full py-4 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg shadow-[#3ec6ff]/30"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-full py-4 bg-gradient-to-r from-[#ff6f1a] to-[#3ec6ff] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
                             >
                               Register Now
                             </motion.button>
@@ -448,4 +460,3 @@ const EventCategoriesSection: React.FC<EventCategoriesSectionProps> = ({ classNa
 };
 
 export default EventCategoriesSection;
-

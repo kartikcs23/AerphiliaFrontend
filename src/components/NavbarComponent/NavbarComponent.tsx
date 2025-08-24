@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, Plane, User, LogOut } from "lucide-react";
 import { Button } from "../ui/button";
+import AerophiliaLogo from '../../assets/Aerophilia-white.svg';
 import { useAuth } from "../../context/AuthContext";
 import type { NavbarComponentProps, NavItem } from "./NavbarComponent.types";
 
@@ -76,7 +77,11 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
               />
             </motion.div>
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-wide">
-              Aerophilia 2025
+              <img
+                src={AerophiliaLogo}
+                alt="Aerophilia Logo"
+                className="h-8 w-auto sm:h-10 md:h-12 lg:h-14 xl:h-16 max-w-[160px] drop-shadow-[0_0_10px_cyan] transition-all duration-300"
+              />
             </span>
           </Link>
 
