@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatCountdown } from '../../../utils/formatters';
-import { Rocket, Star, Sparkles } from 'lucide-react';
+import { APP_MESSAGES } from '../../../constants/appMessages';
+import { Rocket, Star, Sparkles, Zap } from 'lucide-react';
 import type { CountdownData } from './HeroSection.types';
 
 interface CountdownTimerProps {
@@ -55,7 +56,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
     >
       {/* Glow effect */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/30 to-[#0057b7]/20 rounded-2xl blur-xl"
+        className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/30 to-[#ff6f1a]/20 rounded-2xl blur-xl"
         animate={{
           opacity: isActive ? [0.5, 1, 0.5] : 0.3,
           scale: isActive ? [1, 1.1, 1] : 1
@@ -66,7 +67,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
       {/* Main container */}
       <div className="relative bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-6 min-w-[120px]">
         {/* Premium background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/10 to-[#0057b7]/5 rounded-2xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/10 to-[#ff6f1a]/5 rounded-2xl"></div>
         
         {/* Animated number */}
         <div className="relative text-center">
@@ -176,13 +177,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
                 repeat: Infinity 
               }}
             >
-              <Sparkles className="h-24 w-24 text-[#0057b7] mx-auto" />
+              <Sparkles className="h-24 w-24 text-[#ff6f1a] mx-auto" />
             </motion.div>
           </div>
         </motion.div>
         
         <motion.h2 
-          className="text-5xl font-black text-transparent bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] bg-clip-text mb-4"
+          className="text-5xl font-black text-transparent bg-gradient-to-r from-[#3ec6ff] to-[#ff6f1a] bg-clip-text mb-4"
           animate={{
             backgroundPosition: ['0%', '100%', '0%']
           }}
@@ -222,13 +223,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
             ease: "easeInOut"
           }}
         >
-          <Star className="text-[#0057b7] w-6 h-6" fill="currentColor" />
+          <Star className="text-[#ff6f1a] w-6 h-6" fill="currentColor" />
           <h3 className="text-2xl font-bold text-white">Event Launches In</h3>
-          <Star className="text-[#0057b7] w-6 h-6" fill="currentColor" />
+          <Star className="text-[#ff6f1a] w-6 h-6" fill="currentColor" />
         </motion.div>
         
         <motion.div
-          className="h-1 w-24 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] rounded-full mx-auto"
+          className="h-1 w-24 bg-gradient-to-r from-[#3ec6ff] to-[#ff6f1a] rounded-full mx-auto"
           animate={{
             width: [96, 128, 96],
             opacity: [0.7, 1, 0.7]
@@ -275,7 +276,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
         {[...Array(5)].map((_, i) => (
           <motion.div
             key={i}
-            className="w-2 h-2 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] rounded-full"
+            className="w-2 h-2 bg-gradient-to-r from-[#3ec6ff] to-[#ff6f1a] rounded-full"
             animate={{
               scale: [1, 1.5, 1],
               opacity: [0.5, 1, 0.5]
@@ -294,4 +295,3 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, className }
 };
 
 export default CountdownTimer;
-

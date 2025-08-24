@@ -1,7 +1,15 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import type { BackgroundEffectsProps, StarProps, CloudProps } from './BackgroundEffects.type';
-import { AVIATION_CONSTANTS } from '../../utils/constants';
+
+// Legendary Aviation Colors
+const LEGEND_BLUE_COLORS = {
+  PRIMARY: '#3ec6ff',
+  SECONDARY: '#0057b7', 
+  TERTIARY: '#1e40af',
+  ACCENT: '#00d4ff',
+  DARK: '#0f0f23'
+};
 
 const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
   intensity = 'medium',
@@ -33,45 +41,71 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
     }));
   }, [intensity]);
 
+  // Generate legendary flying jets
+  const jets = useMemo(() => {
+    const jetCount = intensity === 'low' ? 2 : intensity === 'medium' ? 4 : 6;
+    return Array.from({ length: jetCount }, (_, index) => ({
+      id: index,
+      startX: Math.random() * -200 - 100,
+      startY: Math.random() * 60 + 10,
+      endX: Math.random() * 200 + 120,
+      endY: Math.random() * 60 + 10,
+      speed: Math.random() * 15 + 20,
+      delay: Math.random() * 10,
+      size: Math.random() * 0.5 + 0.8,
+      type: index % 3, // Different jet types
+    }));
+  }, [intensity]);
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {/* Aurora Background */}
+      
+      {/* Legendary Blue Aurora Background */}
       {enableAurora && (
         <motion.div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-30"
           style={{
-            background: AVIATION_CONSTANTS.COLORS.GRADIENTS.AURORA,
+            background: `
+              radial-gradient(ellipse at 20% 30%, ${LEGEND_BLUE_COLORS.PRIMARY}15 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, ${LEGEND_BLUE_COLORS.SECONDARY}20 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 10%, ${LEGEND_BLUE_COLORS.TERTIARY}10 0%, transparent 60%),
+              linear-gradient(135deg, ${LEGEND_BLUE_COLORS.DARK} 0%, #1a1a3a 50%, ${LEGEND_BLUE_COLORS.DARK} 100%)
+            `,
           }}
           animate={{
-            opacity: [0.1, 0.3, 0.15, 0.25, 0.1],
+            opacity: [0.2, 0.4, 0.25, 0.35, 0.2],
           }}
           transition={{
-            duration: 8,
+            duration: 12,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
       )}
 
-      {/* Stars */}
+      {/* Legendary Blue Stars */}
       {enableStars && (
         <div className="absolute inset-0">
           {stars.map((star, index) => (
             <motion.div
               key={index}
-              className="absolute bg-white rounded-full"
+              className="absolute rounded-full"
               style={{
                 left: `${star.x}%`,
                 top: `${star.y}%`,
                 width: `${star.size}px`,
                 height: `${star.size}px`,
+                background: index % 3 === 0 ? LEGEND_BLUE_COLORS.PRIMARY : 
+                           index % 3 === 1 ? LEGEND_BLUE_COLORS.ACCENT : '#ffffff',
+                boxShadow: `0 0 ${star.size * 2}px ${index % 3 === 0 ? LEGEND_BLUE_COLORS.PRIMARY : 
+                           index % 3 === 1 ? LEGEND_BLUE_COLORS.ACCENT : '#ffffff'}50`
               }}
               animate={{
-                opacity: [0.3, 1, 0.3],
-                scale: [0.8, 1.2, 0.8],
+                opacity: [0.4, 1, 0.4],
+                scale: [0.8, 1.4, 0.8],
               }}
               transition={{
-                duration: 2 + Math.random() * 2,
+                duration: 3 + Math.random() * 2,
                 repeat: Infinity,
                 delay: star.twinkleDelay,
                 ease: "easeInOut"
@@ -169,86 +203,233 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
         />
       </div>
 
-      {/* Flying Objects (Distant Planes) */}
+      {/* Legendary Flying Jets and Airplanes */}
       {intensity !== 'low' && (
         <div className="absolute inset-0">
-          <motion.div
-            className="absolute top-1/4 opacity-20"
-            initial={{ x: '-10vw', y: '20vh' }}
-            animate={{ 
-              x: '110vw', 
-              y: '25vh',
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 5
-            }}
-          >
-            <svg width="40" height="20" viewBox="0 0 40 20" className="text-cyan-300">
-              <path
-                d="M5 10 L30 8 L32 10 L30 12 L5 10 Z M12 10 L8 5 L15 7 L20 9 L12 10 Z M12 10 L8 15 L15 13 L20 11 L12 10 Z"
-                fill="currentColor"
-              />
-            </svg>
-          </motion.div>
+          {jets.map((jet) => (
+            <motion.div
+              key={jet.id}
+              className="absolute"
+              initial={{ 
+                x: `${jet.startX}vw`, 
+                y: `${jet.startY}vh`,
+                scale: jet.size,
+                opacity: 0
+              }}
+              animate={{ 
+                x: `${jet.endX}vw`, 
+                y: `${jet.endY}vh`,
+                opacity: [0, 0.6, 0.8, 0.6, 0]
+              }}
+              transition={{
+                duration: jet.speed,
+                repeat: Infinity,
+                ease: "linear",
+                delay: jet.delay
+              }}
+            >
+              {/* Fighter Jet */}
+              {jet.type === 0 && (
+                <div className="relative">
+                  <svg width="60" height="25" viewBox="0 0 60 25" className="drop-shadow-lg">
+                    {/* Main Fuselage */}
+                    <path
+                      d="M5 12.5 L45 10 L50 12.5 L45 15 L5 12.5 Z"
+                      fill={LEGEND_BLUE_COLORS.PRIMARY}
+                      opacity="0.8"
+                    />
+                    {/* Wings */}
+                    <path
+                      d="M15 12.5 L8 5 L20 8 L28 11 L15 12.5 Z M15 12.5 L8 20 L20 17 L28 14 L15 12.5 Z"
+                      fill={LEGEND_BLUE_COLORS.SECONDARY}
+                      opacity="0.9"
+                    />
+                    {/* Tail */}
+                    <path
+                      d="M45 12.5 L55 8 L55 17 L45 12.5 Z"
+                      fill={LEGEND_BLUE_COLORS.TERTIARY}
+                      opacity="0.7"
+                    />
+                    {/* Engine Glow */}
+                    <circle cx="55" cy="12.5" r="3" fill={LEGEND_BLUE_COLORS.ACCENT} opacity="0.6">
+                      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="0.5s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+                  {/* Vapor Trail */}
+                  <motion.div
+                    className="absolute top-1/2 left-full w-40 h-0.5 -translate-y-1/2"
+                    style={{
+                      background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.ACCENT}60 0%, transparent 100%)`,
+                    }}
+                    animate={{
+                      scaleX: [0.5, 1, 0.8],
+                      opacity: [0.3, 0.7, 0.3]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
+              )}
 
-          <motion.div
-            className="absolute top-2/3 opacity-15"
-            initial={{ x: '110vw', y: '60vh' }}
-            animate={{ 
-              x: '-10vw', 
-              y: '55vh',
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 12
-            }}
-          >
-            <svg width="35" height="18" viewBox="0 0 35 18" className="text-blue-400">
-              <path
-                d="M5 9 L28 7 L30 9 L28 11 L5 9 Z M11 9 L7 4 L14 6 L19 8 L11 9 Z M11 9 L7 14 L14 12 L19 10 L11 9 Z"
-                fill="currentColor"
-              />
-            </svg>
-          </motion.div>
+              {/* Commercial Airliner */}
+              {jet.type === 1 && (
+                <div className="relative">
+                  <svg width="80" height="30" viewBox="0 0 80 30" className="drop-shadow-lg">
+                    {/* Main Fuselage */}
+                    <path
+                      d="M8 15 L65 12 L70 15 L65 18 L8 15 Z"
+                      fill={LEGEND_BLUE_COLORS.SECONDARY}
+                      opacity="0.9"
+                    />
+                    {/* Wings */}
+                    <path
+                      d="M25 15 L15 8 L35 10 L45 13 L25 15 Z M25 15 L15 22 L35 20 L45 17 L25 15 Z"
+                      fill={LEGEND_BLUE_COLORS.PRIMARY}
+                      opacity="0.8"
+                    />
+                    {/* Tail */}
+                    <path
+                      d="M65 15 L75 10 L75 20 L65 15 Z"
+                      fill={LEGEND_BLUE_COLORS.TERTIARY}
+                      opacity="0.8"
+                    />
+                    {/* Engine Lights */}
+                    <circle cx="30" cy="12" r="2" fill={LEGEND_BLUE_COLORS.ACCENT} opacity="0.7">
+                      <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="30" cy="18" r="2" fill={LEGEND_BLUE_COLORS.ACCENT} opacity="0.7">
+                      <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.5s" />
+                    </circle>
+                  </svg>
+                  {/* Contrail */}
+                  <motion.div
+                    className="absolute top-1/2 left-full w-60 h-1 -translate-y-1/2"
+                    style={{
+                      background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.PRIMARY}40 0%, transparent 100%)`,
+                    }}
+                    animate={{
+                      scaleX: [0.8, 1.2, 0.9],
+                      opacity: [0.2, 0.5, 0.2]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Stealth Fighter */}
+              {jet.type === 2 && (
+                <div className="relative">
+                  <svg width="50" height="20" viewBox="0 0 50 20" className="drop-shadow-lg">
+                    {/* Stealth Body */}
+                    <path
+                      d="M5 10 L35 8 L40 10 L35 12 L5 10 Z"
+                      fill={LEGEND_BLUE_COLORS.TERTIARY}
+                      opacity="0.9"
+                    />
+                    {/* Angular Wings */}
+                    <path
+                      d="M12 10 L8 6 L18 7 L22 9 L12 10 Z M12 10 L8 14 L18 13 L22 11 L12 10 Z"
+                      fill={LEGEND_BLUE_COLORS.SECONDARY}
+                      opacity="0.8"
+                    />
+                    {/* Stealth Tail */}
+                    <path
+                      d="M35 10 L45 7 L45 13 L35 10 Z"
+                      fill={LEGEND_BLUE_COLORS.PRIMARY}
+                      opacity="0.7"
+                    />
+                    {/* Plasma Glow */}
+                    <circle cx="45" cy="10" r="2.5" fill={LEGEND_BLUE_COLORS.ACCENT} opacity="0.8">
+                      <animate attributeName="opacity" values="0.6;1;0.6" dur="0.3s" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+                  {/* Plasma Trail */}
+                  <motion.div
+                    className="absolute top-1/2 left-full w-30 h-0.5 -translate-y-1/2"
+                    style={{
+                      background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.ACCENT}80 0%, ${LEGEND_BLUE_COLORS.PRIMARY}40 50%, transparent 100%)`,
+                    }}
+                    animate={{
+                      scaleX: [0.7, 1.3, 0.9],
+                      opacity: [0.5, 0.9, 0.5]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
       )}
 
-      {/* Contrail Effects */}
+      {/* Legendary Blue Contrail Effects */}
       {intensity === 'high' && (
         <div className="absolute inset-0">
+          {/* High Altitude Contrail */}
           <motion.div
-            className="absolute top-1/3 left-0 w-full h-px opacity-30"
+            className="absolute top-1/4 left-0 w-full h-1 opacity-40"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.3) 80%, transparent 100%)',
+              background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.ACCENT}60 20%, ${LEGEND_BLUE_COLORS.PRIMARY}40 50%, ${LEGEND_BLUE_COLORS.SECONDARY}30 80%, transparent 100%)`,
+              filter: 'blur(1px)'
             }}
             animate={{
-              scaleX: [0, 1, 1, 0],
+              scaleX: [0, 1.2, 1, 0],
               x: ['-100%', '0%', '100%', '200%'],
+              opacity: [0, 0.6, 0.4, 0]
             }}
             transition={{
-              duration: 15,
+              duration: 18,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 3
+            }}
+          />
+          
+          {/* Mid Altitude Contrail */}
+          <motion.div
+            className="absolute top-1/2 left-0 w-full h-0.5 opacity-35"
+            style={{
+              background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.PRIMARY}50 30%, ${LEGEND_BLUE_COLORS.ACCENT}40 70%, transparent 100%)`,
+              filter: 'blur(0.5px)'
+            }}
+            animate={{
+              scaleX: [0, 1, 1.1, 0],
+              x: ['100%', '0%', '-100%', '-200%'],
+              opacity: [0, 0.5, 0.35, 0]
+            }}
+            transition={{
+              duration: 22,
               repeat: Infinity,
               ease: "linear",
               delay: 8
             }}
           />
-          
+
+          {/* Low Altitude Jet Stream */}
           <motion.div
-            className="absolute top-2/3 left-0 w-full h-px opacity-25"
+            className="absolute top-2/3 left-0 w-full h-2 opacity-30"
             style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.2) 70%, transparent 100%)',
+              background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.TERTIARY}40 25%, ${LEGEND_BLUE_COLORS.SECONDARY}50 50%, ${LEGEND_BLUE_COLORS.PRIMARY}30 75%, transparent 100%)`,
+              filter: 'blur(2px)'
             }}
             animate={{
-              scaleX: [0, 1, 1, 0],
-              x: ['100%', '0%', '-100%', '-200%'],
+              scaleX: [0, 0.8, 1.3, 0],
+              x: ['-50%', '50%', '150%'],
+              opacity: [0, 0.4, 0.3, 0]
             }}
             transition={{
-              duration: 20,
+              duration: 25,
               repeat: Infinity,
               ease: "linear",
               delay: 15
@@ -256,6 +437,59 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
           />
         </div>
       )}
+
+      {/* Legendary Atmospheric Layers */}
+      <div className="absolute inset-0">
+        {/* Top atmosphere - Deep Space Blue */}
+        <motion.div
+          className="absolute top-0 left-0 right-0 h-1/3 opacity-40"
+          style={{
+            background: `linear-gradient(180deg, ${LEGEND_BLUE_COLORS.DARK}cc 0%, ${LEGEND_BLUE_COLORS.TERTIARY}20 50%, transparent 100%)`,
+          }}
+          animate={enableParallax ? {
+            y: [0, -25, 0],
+          } : {}}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Middle atmosphere - Jet Stream Blue */}
+        <motion.div
+          className="absolute top-1/3 left-0 right-0 h-1/3 opacity-25"
+          style={{
+            background: `linear-gradient(180deg, transparent 0%, ${LEGEND_BLUE_COLORS.SECONDARY}30 50%, ${LEGEND_BLUE_COLORS.PRIMARY}20 75%, transparent 100%)`,
+          }}
+          animate={enableParallax ? {
+            y: [0, 15, 0],
+          } : {}}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+        />
+        
+        {/* Bottom atmosphere - Horizon Blue */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-1/3 opacity-50"
+          style={{
+            background: `linear-gradient(0deg, ${LEGEND_BLUE_COLORS.DARK}dd 0%, ${LEGEND_BLUE_COLORS.SECONDARY}40 30%, ${LEGEND_BLUE_COLORS.PRIMARY}20 70%, transparent 100%)`,
+          }}
+          animate={enableParallax ? {
+            y: [0, 8, 0],
+          } : {}}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 6
+          }}
+        />
+      </div>
     </div>
   );
 };

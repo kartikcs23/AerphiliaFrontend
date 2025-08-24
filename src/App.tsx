@@ -11,6 +11,7 @@ import AboutPage from './pages/AboutPage/AboutPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TeamMakingPage from './pages/TeamMakingPage/TeamMakingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import ComingSoonPage from './pages/ComingSoonPage/ComingSoonPage';
 
 import BackgroundEffects from './components/BackgroundEffects/BackgroundEffects';
 import CursorEffects from './components/CursorEffects/CursorEffects';
@@ -52,6 +53,7 @@ function App() {
                     <Route path="/team-making/:eventId" element={<TeamMakingPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<LoginPage />} />
+                    <Route path="/coming-soon" element={<ComingSoonPage />} />
                   </Routes>
                 </main>
                 {/* Footer */}
