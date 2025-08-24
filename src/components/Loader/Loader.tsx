@@ -16,6 +16,45 @@ const LEGEND_COLORS = {
   GLOW: '#00ffff'
 };
 
+// Epic Boom Sound Effect (using Web Audio API)
+const playBoomSound = () => {
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    
+    // Create a dramatic boom sound using oscillators
+    const oscillator1 = audioContext.createOscillator();
+    const oscillator2 = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Low frequency boom
+    oscillator1.frequency.setValueAtTime(40, audioContext.currentTime);
+    oscillator1.frequency.exponentialRampToValueAtTime(20, audioContext.currentTime + 0.3);
+    oscillator1.type = 'sawtooth';
+    
+    // Mid frequency explosion crack
+    oscillator2.frequency.setValueAtTime(200, audioContext.currentTime);
+    oscillator2.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.1);
+    oscillator2.type = 'square';
+    
+    // Volume envelope
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+    
+    oscillator1.connect(gainNode);
+    oscillator2.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator1.start(audioContext.currentTime);
+    oscillator2.start(audioContext.currentTime);
+    oscillator1.stop(audioContext.currentTime + 0.5);
+    oscillator2.stop(audioContext.currentTime + 0.3);
+  } catch (error) {
+    // Gracefully handle if audio context is not supported
+    console.log('Audio context not supported, playing silent boom 💥');
+  }
+};
+
 const Loader: React.FC<LoaderProps> = ({ 
   onComplete, 
   duration = AVIATION_CONSTANTS.LOADER_DURATION 
@@ -26,6 +65,7 @@ const Loader: React.FC<LoaderProps> = ({
   });
   const [isVisible, setIsVisible] = useState(true);
   const [celebrationPhase, setCelebrationPhase] = useState(0);
+  const [boomPhase, setBoomPhase] = useState(0); // 0: none, 1: building, 2: explosion, 3: afterglow
 
   // Generate legendary flying squad with precise formation positions
   const flyingSquad = useMemo(() => {
@@ -72,10 +112,18 @@ const Loader: React.FC<LoaderProps> = ({
     const timeline = gsap.timeline({
       onComplete: () => {
         setCelebrationPhase(1);
+        
+        // Start the BOOM sequence
+        setTimeout(() => setBoomPhase(1), 500);        // Building tension
+        setTimeout(() => {
+          setBoomPhase(2);                             // BOOM explosion!
+          playBoomSound();                             // 💥 EPIC AUDIO BOOM!
+        }, 1000);       
+        setTimeout(() => setBoomPhase(3), 1200);       // Afterglow
         setTimeout(() => {
           setIsVisible(false);
           onComplete();
-        }, 1500);
+        }, 2000); // Extended timing for boom effect
       }
     });
 
@@ -226,6 +274,12 @@ const Loader: React.FC<LoaderProps> = ({
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
+          animate={
+            boomPhase === 2 ? {
+              x: [0, -3, 3, -2, 2, -1, 1, 0],
+              y: [0, -2, 2, -1, 1, -0.5, 0.5, 0]
+            } : {}
+          }
         >
           {/* Legendary Star Field */}
           <div className="absolute inset-0 overflow-hidden">
@@ -806,6 +860,194 @@ const Loader: React.FC<LoaderProps> = ({
                 />
               ))}
             </div>
+          )}
+
+          {/* EPIC BOOM EFFECTS */}
+          {boomPhase > 0 && (
+            <motion.div 
+              className="fixed inset-0 z-50 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {/* Phase 1: Building Tension */}
+              {boomPhase >= 1 && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-radial from-orange-500/30 via-red-500/20 to-transparent"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ 
+                    scale: boomPhase >= 2 ? [0, 1, 3] : [0, 0.5],
+                    opacity: boomPhase >= 2 ? [0, 1, 0] : [0, 0.8]
+                  }}
+                  transition={{ 
+                    duration: boomPhase >= 2 ? 0.3 : 0.5,
+                    ease: "easeOut"
+                  }}
+                />
+              )}
+
+              {/* Phase 2: MASSIVE EXPLOSION */}
+              {boomPhase >= 2 && (
+                <>
+                  {/* Core Explosion */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-radial from-white via-yellow-300 to-orange-500"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ 
+                      scale: [0, 4, 8],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  />
+                  
+                  {/* Shockwave Rings */}
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <motion.div
+                      key={`shockwave-${i}`}
+                      className="absolute inset-0 border-4 border-white/60 rounded-full"
+                      style={{
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      initial={{ scale: 0, opacity: 1 }}
+                      animate={{ 
+                        scale: [0, 6, 12],
+                        opacity: [1, 0.3, 0]
+                      }}
+                      transition={{ 
+                        duration: 0.8,
+                        delay: i * 0.1,
+                        ease: "easeOut" 
+                      }}
+                    />
+                  ))}
+
+                  {/* Explosion Particles */}
+                  {Array.from({ length: 100 }).map((_, i) => (
+                    <motion.div
+                      key={`explosion-particle-${i}`}
+                      className="absolute w-2 h-2 rounded-full"
+                      style={{
+                        background: `hsl(${Math.random() * 60 + 15}, 100%, ${50 + Math.random() * 50}%)`, // Hot colors
+                        left: '50%',
+                        top: '50%',
+                      }}
+                      initial={{ scale: 0, x: 0, y: 0 }}
+                      animate={{ 
+                        scale: [0, 1, 0],
+                        x: (Math.random() - 0.5) * 1000,
+                        y: (Math.random() - 0.5) * 1000,
+                        rotate: Math.random() * 360
+                      }}
+                      transition={{ 
+                        duration: 0.6,
+                        ease: "easeOut"
+                      }}
+                    />
+                  ))}
+
+                  {/* Dramatic Multi-Flash */}
+                  <motion.div
+                    className="absolute inset-0 bg-white"
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                      opacity: [0, 0.8, 0, 0.6, 0, 1, 0]
+                    }}
+                    transition={{ 
+                      duration: 0.3,
+                      times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 1]
+                    }}
+                  />
+
+                  {/* Epic "BOOM!" Text */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ 
+                      scale: [0, 1.5, 1.2, 0],
+                      opacity: [0, 1, 1, 0],
+                      rotate: [0, -5, 5, 0]
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    <div 
+                      className="text-8xl font-black text-white"
+                      style={{
+                        textShadow: '0 0 20px #ff4444, 0 0 40px #ff8800, 0 0 60px #ffff00',
+                        WebkitTextStroke: '3px #000'
+                      }}
+                    >
+                      BOOM!
+                    </div>
+                  </motion.div>
+                </>
+              )}
+
+              {/* Phase 3: Afterglow & Smoke */}
+              {boomPhase >= 3 && (
+                <>
+                  {/* Glowing Afterglow */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-radial from-orange-400/40 via-red-500/20 to-transparent"
+                    initial={{ scale: 8, opacity: 0 }}
+                    animate={{ 
+                      scale: [8, 12, 15],
+                      opacity: [0, 0.6, 0]
+                    }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                  />
+
+                  {/* Rising Smoke Clouds */}
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <motion.div
+                      key={`smoke-${i}`}
+                      className="absolute w-8 h-8 rounded-full bg-gray-600/30"
+                      style={{
+                        left: `${45 + Math.random() * 10}%`,
+                        top: '50%',
+                      }}
+                      initial={{ scale: 0, y: 0, opacity: 0.8 }}
+                      animate={{ 
+                        scale: [0, 1 + Math.random(), 2 + Math.random()],
+                        y: [0, -200 - Math.random() * 200],
+                        opacity: [0.8, 0.4, 0],
+                        x: (Math.random() - 0.5) * 100
+                      }}
+                      transition={{ 
+                        duration: 1.2,
+                        delay: Math.random() * 0.3,
+                        ease: "easeOut"
+                      }}
+                    />
+                  ))}
+
+                  {/* Sparks and Embers */}
+                  {Array.from({ length: 30 }).map((_, i) => (
+                    <motion.div
+                      key={`ember-${i}`}
+                      className="absolute w-1 h-1 rounded-full bg-orange-400"
+                      style={{
+                        left: `${40 + Math.random() * 20}%`,
+                        top: `${40 + Math.random() * 20}%`,
+                      }}
+                      initial={{ scale: 1, opacity: 1 }}
+                      animate={{ 
+                        scale: [1, 0],
+                        opacity: [1, 0],
+                        y: Math.random() * -100,
+                        x: (Math.random() - 0.5) * 50
+                      }}
+                      transition={{ 
+                        duration: 0.8 + Math.random() * 0.4,
+                        delay: Math.random() * 0.2,
+                        ease: "easeOut"
+                      }}
+                    />
+                  ))}
+                </>
+              )}
+            </motion.div>
           )}
         </motion.div>
       )}

@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Stars, OrbitControls, Float, MeshWobbleMaterial } from '@react-three/drei';
-import { Plane, Calendar, MapPin, Users, Trophy, Sparkles, Zap, Star, ArrowRight, Play, ChevronDown } from 'lucide-react';
-import { Button } from '../../ui/button';
+import { Calendar, MapPin, Users, Trophy, Sparkles, Zap, ArrowRight, Play, ChevronDown } from 'lucide-react';
 import AerophiliaLogo from '../../../assets/Aerophilia-white.svg';
-import CountdownTimer from './CountdownTimer';
 import { Link } from 'react-router-dom';
 import type { HeroSectionProps } from './HeroSection.types';
 
@@ -130,11 +128,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
   }, []);
 
   // Event details with enhanced data
-  const eventDate = new Date('2025-10-23');
   const eventStats = [
     { 
       icon: Calendar, 
-      label: 'October 23-25, 2025', 
+      label: 'November 5-7, 2025', 
       description: '3 Days of Pure Innovation',
       gradient: 'from-[#3ec6ff] to-[#0057b7]'
     },
@@ -268,8 +265,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               />
               <div className="h-12 w-0.5 bg-gradient-to-b from-[#3ec6ff] to-[#0057b7]"></div>
               <div className="text-white/80 font-light">
-                <div className="text-lg">Sahyadri College</div>
-                <div className="text-sm">Innovation Hub</div>
               </div>
             </motion.div>
 

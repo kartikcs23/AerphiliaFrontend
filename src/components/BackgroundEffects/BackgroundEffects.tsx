@@ -72,6 +72,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
               linear-gradient(135deg, ${LEGEND_BLUE_COLORS.DARK} 0%, #1a1a3a 50%, ${LEGEND_BLUE_COLORS.DARK} 100%)
             `,
           }}
+          initial={{ opacity: 0.2 }}
           animate={{
             opacity: [0.2, 0.4, 0.25, 0.35, 0.2],
           }}
@@ -100,6 +101,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
                 boxShadow: `0 0 ${star.size * 2}px ${index % 3 === 0 ? LEGEND_BLUE_COLORS.PRIMARY : 
                            index % 3 === 1 ? LEGEND_BLUE_COLORS.ACCENT : '#ffffff'}50`
               }}
+              initial={{ opacity: 0.4, scale: 0.8 }}
               animate={{
                 opacity: [0.4, 1, 0.4],
                 scale: [0.8, 1.4, 0.8],
@@ -127,6 +129,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
                 top: `${cloud.y}%`,
                 transform: `scale(${cloud.scale})`,
               }}
+              initial={{ x: "-10vw", opacity: 0 }}
               animate={{
                 x: [`-10vw`, `110vw`],
                 opacity: [0, cloud.opacity, cloud.opacity, 0],
@@ -261,6 +264,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
                     style={{
                       background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.ACCENT}60 0%, transparent 100%)`,
                     }}
+                    initial={{ scaleX: 0.5, opacity: 0.3 }}
                     animate={{
                       scaleX: [0.5, 1, 0.8],
                       opacity: [0.3, 0.7, 0.3]
@@ -310,6 +314,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
                     style={{
                       background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.PRIMARY}40 0%, transparent 100%)`,
                     }}
+                    initial={{ scaleX: 0.8, opacity: 0.2 }}
                     animate={{
                       scaleX: [0.8, 1.2, 0.9],
                       opacity: [0.2, 0.5, 0.2]
@@ -356,6 +361,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
                     style={{
                       background: `linear-gradient(90deg, ${LEGEND_BLUE_COLORS.ACCENT}80 0%, ${LEGEND_BLUE_COLORS.PRIMARY}40 50%, transparent 100%)`,
                     }}
+                    initial={{ scaleX: 0.7, opacity: 0.5 }}
                     animate={{
                       scaleX: [0.7, 1.3, 0.9],
                       opacity: [0.5, 0.9, 0.5]
@@ -383,6 +389,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
               background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.ACCENT}60 20%, ${LEGEND_BLUE_COLORS.PRIMARY}40 50%, ${LEGEND_BLUE_COLORS.SECONDARY}30 80%, transparent 100%)`,
               filter: 'blur(1px)'
             }}
+            initial={{ scaleX: 0, x: '-100%', opacity: 0 }}
             animate={{
               scaleX: [0, 1.2, 1, 0],
               x: ['-100%', '0%', '100%', '200%'],
@@ -403,6 +410,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
               background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.PRIMARY}50 30%, ${LEGEND_BLUE_COLORS.ACCENT}40 70%, transparent 100%)`,
               filter: 'blur(0.5px)'
             }}
+            initial={{ scaleX: 0, x: '100%', opacity: 0 }}
             animate={{
               scaleX: [0, 1, 1.1, 0],
               x: ['100%', '0%', '-100%', '-200%'],
@@ -423,6 +431,7 @@ const BackgroundEffects: React.FC<BackgroundEffectsProps> = ({
               background: `linear-gradient(90deg, transparent 0%, ${LEGEND_BLUE_COLORS.TERTIARY}40 25%, ${LEGEND_BLUE_COLORS.SECONDARY}50 50%, ${LEGEND_BLUE_COLORS.PRIMARY}30 75%, transparent 100%)`,
               filter: 'blur(2px)'
             }}
+            initial={{ scaleX: 0, x: '-50%', opacity: 0 }}
             animate={{
               scaleX: [0, 0.8, 1.3, 0],
               x: ['-50%', '50%', '150%'],

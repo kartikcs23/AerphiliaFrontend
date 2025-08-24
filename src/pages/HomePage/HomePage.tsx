@@ -5,6 +5,7 @@ import HeroSection from '../../components/HomePage/HeroSection/HeroSection';
 import EventCategoriesSection from '../../components/HomePage/EventCategoriesSection/EventCategoriesSection';
 import KeynoteSpeakersSection from '../../components/HomePage/KeynoteSpeakersSection/KeynoteSpeakersSection';
 import PartnersSection from '../../components/HomePage/PartnersSection/PartnersSection';
+import TravellingAir from '../../components/HomePage/TravellingAir/TravellingAir';
 import ScrollAirplane from '../../components/HomePage/ScrollAirplane/ScrollAirplane';
 import LegendaryCountdown from '../../components/HomePage/LegendaryCountdown/LegendaryCountdown';
 import type { HomePageProps } from './HomePage.types';
@@ -322,6 +323,24 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
           {/* Final transparent masterpiece */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#3ec6ff]/4 via-transparent to-[#0057b7]/3 rounded-3xl backdrop-blur-sm border border-[#0057b7]/10 shadow-xl shadow-[#3ec6ff]/4"></div>
           <PartnersSection />
+        </motion.div>
+      </motion.section>
+
+      {/* Travelling Air Animation Section */}
+      <motion.section 
+        className="relative py-20 px-4 mb-20"
+        style={{ y: partnersY }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+          className="w-full max-w-[1600px] mx-auto relative"
+        >
+          {/* Epic traveling animation container */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0ea5e9]/5 via-transparent to-[#0284c7]/5 rounded-3xl backdrop-blur-sm border border-[#0ea5e9]/10 shadow-xl shadow-[#0ea5e9]/4"></div>
+          <TravellingAir />
         </motion.div>
       </motion.section>
 
