@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import { useState,  useEffect } from 'react';
 import { Wrench, Trophy, Eye, ArrowRight, Sparkles, Zap } from 'lucide-react';
 import type { EventCategoriesSectionProps } from './EventCategoriesSection.types';
 

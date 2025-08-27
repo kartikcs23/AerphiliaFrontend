@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatCountdown } from '../../../utils/formatters';
-import { APP_MESSAGES } from '../../../constants/appMessages';
-import { Rocket, Star, Sparkles, Zap } from 'lucide-react';
+// import { APP_MESSAGES } from '../../../constants/appMessages';
+import { Rocket, Star, Sparkles} from 'lucide-react';
 import type { CountdownData } from './HeroSection.types';
 
 interface CountdownTimerProps {
