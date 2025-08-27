@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { Sparkles, ArrowDown } from 'lucide-react';
 import HeroSection from '../../components/HomePage/HeroSection/HeroSection';
 import EventCategoriesSection from '../../components/HomePage/EventCategoriesSection/EventCategoriesSection';
