@@ -1,12 +1,12 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { Sparkles, ArrowDown } from 'lucide-react';
 import HeroSection from '../../components/HomePage/HeroSection/HeroSection';
 import EventCategoriesSection from '../../components/HomePage/EventCategoriesSection/EventCategoriesSection';
 import KeynoteSpeakersSection from '../../components/HomePage/KeynoteSpeakersSection/KeynoteSpeakersSection';
 import PartnersSection from '../../components/HomePage/PartnersSection/PartnersSection';
 import TravellingAir from '../../components/HomePage/TravellingAir/TravellingAir';
-import ScrollAirplane from '../../components/HomePage/ScrollAirplane/ScrollAirplane';
+// import ScrollAirplane from '../../components/HomePage/ScrollAirplane/ScrollAirplane';
 import LegendaryCountdown from '../../components/HomePage/LegendaryCountdown/LegendaryCountdown';
 import type { HomePageProps } from './HomePage.types';
 
@@ -20,56 +20,48 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
     offset: ["start start", "end end"]
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  // Ultra-lightweight scroll with minimal spring effects
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]); // Further reduced from 20%
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -20]); // Further reduced from -30
 
-  // Enhanced parallax transforms with smoother animations
-  const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  // Ultra smooth parallax - pure smooth movement without any shrinking
-  const heroY = useTransform(smoothProgress, [0, 1], [0, -50]);
-  const categoriesY = useTransform(smoothProgress, [0, 1], [0, 0]);
-  const speakersY = useTransform(smoothProgress, [0, 1], [0, 0]);
-  const partnersY = useTransform(smoothProgress, [0, 1], [0, 0]);
-
-  // Mouse tracking for cursor effects
+  // Ultra-throttled mouse tracking for minimal CPU usage
   useEffect(() => {
+    let lastCall = 0;
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      const now = Date.now();
+      // Throttle to 30fps for much better performance
+      if (now - lastCall >= 33) { 
+        setMousePosition({ x: e.clientX, y: e.clientY });
+        lastCall = now;
+      }
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     setIsLoaded(true);
     
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Cursor glow effect
-  const cursorVariants = {
+  // Ultra-lightweight cursor variants with minimal re-calculations
+  const cursorVariants = useMemo(() => ({
     default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      backgroundColor: 'rgba(62, 198, 255, 0.4)',
-    },
-    hover: {
-      scale: 2,
-      backgroundColor: 'rgba(0, 87, 183, 0.6)',
+      x: mousePosition.x - 12, // Smaller cursor
+      y: mousePosition.y - 12,
+      backgroundColor: 'rgba(62, 198, 255, 0.3)', // Reduced opacity
     }
-  };
+  }), [mousePosition.x, mousePosition.y]);
 
   return (
     <div ref={containerRef} className={`min-h-screen w-full relative ${className}`}>
       {/* Legendary Scroll Airplane */}
-      <ScrollAirplane />
+      {/* <ScrollAirplane /> */}
       
-      {/* Custom Cursor */}
+      {/* Ultra-lightweight Custom Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-6 h-6 bg-[#3ec6ff]/50 rounded-full pointer-events-none z-50 mix-blend-screen shadow-2xl shadow-[#3ec6ff]/40"
+        className="fixed top-0 left-0 w-4 h-4 bg-[#3ec6ff]/40 rounded-full pointer-events-none z-50" // Smaller and less opacity
         variants={cursorVariants}
         animate="default"
-        transition={{ type: "spring", stiffness: 500, damping: 28 }}
+        transition={{ type: "tween", duration: 0.1 }} // Fast, simple transition
       />
       
       {/* Ultra Futuristic Dynamic Background */}
@@ -91,85 +83,38 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
           </div>
         </div>
         
-        {/* Ultra Premium Floating Elements with Enhanced Physics */}
+        {/* Ultra-lightweight Floating Elements with minimal complexity */}
         <motion.div 
-          className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-[#3ec6ff]/20 to-[#0057b7]/30 rounded-full blur-3xl"
+          className="absolute top-20 left-20 w-60 h-60 bg-gradient-to-r from-[#3ec6ff]/10 to-[#0057b7]/15 rounded-full blur-2xl" // Smaller and less blur
           animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.2, 0.6, 0.2],
-            x: [0, 200, 0],
-            y: [0, -100, 0],
-            rotate: [0, 180, 360]
+            scale: [1, 1.1, 1], // Reduced from 1.3
+            opacity: [0.1, 0.25, 0.1], // Much reduced intensity
+            x: [0, 100, 0], // Reduced from 150
+            y: [0, -50, 0], // Reduced from -80
           }}
           transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-[#0057b7]/25 to-[#3ec6ff]/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.7, 0.3],
-            x: [0, -150, 0],
-            y: [0, 120, 0],
-            rotate: [360, 180, 0]
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute top-1/2 left-10 w-64 h-64 bg-gradient-to-r from-[#1e40af]/15 to-[#3ec6ff]/25 rounded-full blur-2xl"
-          animate={{
-            scale: [1, 1.6, 1],
-            opacity: [0.15, 0.5, 0.15],
-            x: [0, 250, 0],
-            y: [0, -180, 0],
-            rotate: [0, 270, 360]
-          }}
-          transition={{
-            duration: 35,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-10 left-1/2 w-72 h-72 bg-gradient-to-r from-[#0057b7]/20 to-[#1e40af]/30 rounded-full blur-3xl"
-          animate={{
-            scale: [1.1, 1.5, 1.1],
-            opacity: [0.2, 0.6, 0.2],
-            x: [0, -120, 0],
-            y: [0, 150, 0],
-            rotate: [0, -180, -360]
-          }}
-          transition={{
-            duration: 40,
+            duration: 40, // Much slower animation
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
         
-        {/* Legendary Floating Particles with Neural Network Effect */}
-        {[...Array(80)].map((_, i) => (
+        {/* Ultra-optimized Floating Particles - reduced from 20 to 8 for maximum performance */}
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-[#3ec6ff]/70 rounded-full backdrop-blur-sm shadow-lg shadow-[#3ec6ff]/30"
+            className="absolute w-1 h-1 bg-[#3ec6ff]/40 rounded-full" // Removed expensive effects
             animate={{
-              x: [0, Math.random() * 800 - 400],
-              y: [0, Math.random() * 800 - 400],
-              scale: [0, Math.random() * 2.5 + 0.5, 0],
-              opacity: [0, Math.random() * 0.9 + 0.4, 0],
-              rotate: [0, 360]
+              x: [0, Math.random() * 300 - 150], // Further reduced range
+              y: [0, Math.random() * 300 - 150], // Further reduced range
+              scale: [0, Math.random() * 1 + 0.5, 0], // Reduced scale
+              opacity: [0, Math.random() * 0.5 + 0.2, 0], // Further reduced opacity
             }}
             transition={{
-              duration: Math.random() * 30 + 30,
+              duration: Math.random() * 25 + 25, // Much slower animation
               repeat: Infinity,
               ease: "linear",
-              delay: Math.random() * 25
+              delay: Math.random() * 15 // Increased delay range
             }}
             style={{
               left: `${Math.random() * 100}%`,
@@ -178,77 +123,33 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
           />
         ))}
         
-        {/* Futuristic Geometric Shapes */}
+        {/* Ultra-lightweight Geometric Shapes - significantly reduced complexity */}
         <motion.div
-          className="absolute top-1/3 left-1/3 w-72 h-72 border border-[#3ec6ff]/30 rounded-full shadow-2xl shadow-[#3ec6ff]/10"
+          className="absolute top-1/3 left-1/3 w-48 h-48 border border-[#3ec6ff]/20 rounded-full" // Smaller and less opacity
           animate={{ 
             rotate: 360,
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.6, 0.3]
+            opacity: [0.2, 0.3, 0.2] // Much reduced opacity range
           }}
           transition={{ 
-            rotate: { duration: 50, repeat: Infinity, ease: "linear" },
-            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-            opacity: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 right-1/3 w-56 h-56 border-2 border-[#0057b7]/40 rounded-lg shadow-2xl shadow-[#0057b7]/15"
-          animate={{ 
-            rotate: -360,
-            scale: [1, 1.2, 1],
-            opacity: [0.4, 0.8, 0.4]
-          }}
-          transition={{ 
-            rotate: { duration: 60, repeat: Infinity, ease: "linear" },
-            scale: { duration: 10, repeat: Infinity, ease: "easeInOut" },
-            opacity: { duration: 5, repeat: Infinity, ease: "easeInOut" }
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-1/4 w-40 h-40 border-2 border-[#1e40af]/35 rounded-full shadow-xl shadow-[#1e40af]/10"
-          animate={{ 
-            rotate: 360,
-            scale: [1, 1.4, 1],
-            opacity: [0.2, 0.7, 0.2]
-          }}
-          transition={{ 
-            rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-            scale: { duration: 12, repeat: Infinity, ease: "easeInOut" },
-            opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-          }}
-        />
-        <motion.div
-          className="absolute top-1/4 left-1/2 w-32 h-32 border border-[#3ec6ff]/25 rounded-lg shadow-lg shadow-[#3ec6ff]/10"
-          animate={{ 
-            rotate: -360,
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.9, 0.3]
-          }}
-          transition={{ 
-            rotate: { duration: 35, repeat: Infinity, ease: "linear" },
-            scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
-            opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+            rotate: { duration: 90, repeat: Infinity, ease: "linear" }, // Much slower rotation
+            opacity: { duration: 12, repeat: Infinity, ease: "easeInOut" }
           }}
         />
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Ultra-lightweight Scroll Indicator */}
       <motion.div
         className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40"
-        initial={{ opacity: 1 }}
         animate={{ 
-          opacity: scrollYProgress.get() > 0.1 ? 0 : 1,
-          y: [0, 10, 0]
+          opacity: scrollYProgress.get() > 0.1 ? 0 : 1, // Earlier fade out
         }}
         transition={{ 
-          y: { duration: 2, repeat: Infinity },
-          opacity: { duration: 0.3 }
+          opacity: { duration: 0.2 }
         }}
       >
-        <div className="flex flex-col items-center text-white/70 bg-[#0057b7]/20 backdrop-blur-sm px-4 py-3 rounded-2xl border border-[#3ec6ff]/30">
-          <span className="text-sm font-medium mb-2 bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] bg-clip-text text-transparent">Scroll to explore</span>
-          <ArrowDown className="w-6 h-6 animate-bounce text-[#3ec6ff]" />
+        <div className="flex flex-col items-center text-white/60 bg-[#0057b7]/15 backdrop-blur-sm px-3 py-2 rounded-xl border border-[#3ec6ff]/20">
+          <span className="text-xs font-medium mb-1 text-[#3ec6ff]">Scroll</span>
+          <ArrowDown className="w-4 h-4 text-[#3ec6ff]" /> {/* Removed animate-bounce for performance */}
         </div>
       </motion.div>
 
@@ -272,10 +173,9 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
       {/* Legendary Time Collapse Countdown */}
       <LegendaryCountdown />
 
-      {/* Event Categories with Butter Smooth Scrolling */}
+      {/* Event Categories with Static Positioning for Performance */}
       <motion.section 
         className="relative py-20 px-4"
-        style={{ y: categoriesY }}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -290,10 +190,9 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
         </motion.div>
       </motion.section>
 
-      {/* Keynote Speakers with Smooth Flow */}
+      {/* Keynote Speakers with Static Positioning */}
       <motion.section 
         className="relative py-20 px-4"
-        style={{ y: speakersY }}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -308,10 +207,9 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
         </motion.div>
       </motion.section>
 
-      {/* Partners with Pure Elegance */}
+      {/* Partners with Static Positioning */}
       <motion.section 
         className="relative py-20 px-4 mb-20"
-        style={{ y: partnersY }}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -329,7 +227,6 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
       {/* Travelling Air Animation Section */}
       <motion.section 
         className="relative py-20 px-4 mb-20"
-        style={{ y: partnersY }}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -344,45 +241,24 @@ const HomePage: React.FC<HomePageProps> = ({ className }) => {
         </motion.div>
       </motion.section>
 
-      {/* Premium Loading State */}
+      {/* Ultra-lightweight Loading State */}
       {!isLoaded && (
         <motion.div
           className="fixed inset-0 bg-gradient-to-br from-[#0a0a0f] via-[#0f172a] to-[#0d1421] z-50 flex items-center justify-center"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
-          transition={{ duration: 2, delay: 1 }}
+          transition={{ duration: 1, delay: 0.5 }} // Faster loading
           onAnimationComplete={() => setIsLoaded(true)}
         >
-          <motion.div
-            className="text-[#3ec6ff] text-4xl font-bold flex flex-col items-center space-y-6"
-          >
+          <div className="text-[#3ec6ff] text-2xl font-bold flex flex-col items-center space-y-4">
             <motion.div
-              animate={{ 
-                rotate: 360,
-                scale: [1, 1.2, 1],
-                filter: ["drop-shadow(0 0 20px #3ec6ff)", "drop-shadow(0 0 40px #3ec6ff)", "drop-shadow(0 0 20px #3ec6ff)"]
-              }}
-              transition={{ 
-                rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                scale: { duration: 1, repeat: Infinity, ease: "easeInOut" },
-                filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             >
-              <Sparkles className="w-16 h-16" />
+              <Sparkles className="w-10 h-10" />
             </motion.div>
-            <motion.span 
-              className="text-2xl font-light bg-gradient-to-r from-[#3ec6ff] to-[#0057b7] bg-clip-text text-transparent"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              Loading Experience...
-            </motion.span>
-            <motion.div 
-              className="w-48 h-1 bg-gradient-to-r from-transparent via-[#3ec6ff] to-transparent rounded-full"
-              animate={{ scaleX: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
+            <span className="text-lg font-light text-[#3ec6ff]">Loading...</span>
+          </div>
         </motion.div>
       )}
     </div>

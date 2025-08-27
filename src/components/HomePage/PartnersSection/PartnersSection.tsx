@@ -7,7 +7,7 @@ import type { PartnersSectionProps } from './PartnersSection.types';
 const PartnersSection: React.FC<PartnersSectionProps> = ({ className }) => {
   return (
     <section className={`w-full py-24 relative overflow-hidden ${className}`}>
-      {/* Ultra Premium Animated background elements */}
+  
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-[#3ec6ff]/8 via-[#0057b7]/5 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-[#0057b7]/8 via-[#0057b7]/5 to-transparent"></div>
@@ -15,48 +15,48 @@ const PartnersSection: React.FC<PartnersSectionProps> = ({ className }) => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%, rgba(255,111,26,0.06), transparent_50%)]"></div>
       </div>
 
-      {/* Ultra Premium Floating icons with enhanced animations */}
+      {/* Optimized Floating icons with reduced animation complexity */}
       <motion.div
-        className="absolute top-20 left-20 text-[#3ec6ff]/30"
+        className="absolute top-20 left-20 text-[#3ec6ff]/25" // Reduced opacity
         animate={{ 
           rotate: 360, 
-          y: [0, 30, 0],
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.7, 0.3]
+          y: [0, 22, 0], // Reduced movement
+          scale: [1, 1.08, 1], // Reduced scale change
+          opacity: [0.25, 0.5, 0.25] // Reduced opacity range
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }} // Slower animation
       >
-        <Handshake size={140} />
+        <Handshake size={120} /> {/* Smaller size */}
       </motion.div>
       <motion.div
-        className="absolute bottom-20 right-20 text-[#0057b7]/30"
+        className="absolute bottom-20 right-20 text-[#0057b7]/25" // Reduced opacity
         animate={{ 
           rotate: -360, 
-          y: [0, -30, 0],
-          scale: [1, 1.15, 1],
-          opacity: [0.3, 0.8, 0.3]
+          y: [0, -22, 0], // Reduced movement
+          scale: [1, 1.06, 1], // Reduced scale change
+          opacity: [0.25, 0.6, 0.25] // Reduced opacity range
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 32, repeat: Infinity, ease: "linear" }} // Slower animation
       >
-        <TrendingUp size={140} />
+        <TrendingUp size={120} /> {/* Smaller size */}
       </motion.div>
 
-      {/* Premium background particles */}
+      {/* Optimized background particles with reduced count */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(3)].map((_, i) => ( // Reduced from 6 to 3
           <motion.div
             key={i}
-            className="absolute w-3 h-3 bg-[#0057b7]/20 rounded-full"
+            className="absolute w-2 h-2 bg-[#0057b7]/15 rounded-full" // Smaller size and reduced opacity
             animate={{
               x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
               y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
-              opacity: [0, 0.8, 0],
-              scale: [0, 1.5, 0]
+              opacity: [0, 0.6, 0], // Reduced max opacity
+              scale: [0, 1, 0] // Reduced scale
             }}
             transition={{
-              duration: 10 + i * 2,
+              duration: 15 + i * 3, // Slower animation
               repeat: Infinity,
-              delay: i * 2,
+              delay: i * 3,
               ease: "easeInOut"
             }}
           />
@@ -75,9 +75,9 @@ const PartnersSection: React.FC<PartnersSectionProps> = ({ className }) => {
           <motion.div
             className="absolute -top-10 left-1/2 transform -translate-x-1/2"
             animate={{ 
-              scale: [1, 1.4, 1], 
-              rotate: [0, 15, -15, 0],
-              opacity: [0.3, 0.9, 0.3]
+              scale: [1, 1.2, 1], // Reduced scale change
+              rotate: [0, 12, -12, 0], // Reduced rotation
+              opacity: [0.25, 0.7, 0.25] // Reduced opacity range
             }}
             transition={{ duration: 5, repeat: Infinity }}
           >
