@@ -9,9 +9,7 @@ import {
   Twitter, 
   Instagram, 
   Linkedin,
-  Github,
-  Send,
-  Heart
+  Github
 } from 'lucide-react';
 import type { FooterComponentProps, FooterSection } from './FooterComponent.types';
 import AerophiliaLogo from '../../assets/Aerophilia-white.svg';
