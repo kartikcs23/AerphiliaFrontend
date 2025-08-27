@@ -9,9 +9,7 @@ import {
   Twitter, 
   Instagram, 
   Linkedin,
-  Github,
-  Send,
-  Heart
+  Github
 } from 'lucide-react';
 import type { FooterComponentProps, FooterSection } from './FooterComponent.types';
 import AerophiliaLogo from '../../assets/Aerophilia-white.svg';
@@ -98,13 +96,6 @@ const FooterComponent: React.FC<FooterComponentProps> = ({ className }) => {
               className="space-y-6 rounded-2xl bg-gradient-to-br from-blue-900/30 via-black/40 to-cyan-900/20 p-8 shadow-xl backdrop-blur-md border border-blue-500/10"
             >
               <div className="flex items-center space-x-3">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="p-2 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg shadow-lg ring-2 ring-blue-400/30"
-                >
-                  <Plane className="h-7 w-7 text-white drop-shadow-lg" />
-                </motion.div>
                 {/* Aerophilia White Logo */}
                 <img src={AerophiliaLogo} alt="Aerophilia Logo" className="h-10 w-auto" />
               </div>

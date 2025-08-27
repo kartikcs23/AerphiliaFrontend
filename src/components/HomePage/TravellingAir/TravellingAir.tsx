@@ -194,8 +194,8 @@ export default function TravellingAir() {
     return unsubscribe;
   }, [scrollYProgress]);
 
-  // Enhanced ultra-responsive particles with device-specific counts
-  const particleCount = isMobile ? 4 : isTablet ? 8 : 12;
+  // Optimized ultra-responsive particles with reduced counts for performance
+  const particleCount = isMobile ? 2 : isTablet ? 4 : 6; // Reduced from 4/8/12
   const particles = Array.from({ length: particleCount }, () => ({
     left: Math.random() * 85 + 7.5, // Keep within safe bounds (7.5% - 92.5%)
     delay: Math.random() * 6,
@@ -252,7 +252,7 @@ export default function TravellingAir() {
             }}
             initial={{ y: 0, opacity: p.opacity }}
             animate={{ y: isMobile ? -800 : -1600, opacity: 0 }}
-            transition={{ duration: isMobile ? 5 : 7, delay: p.delay, repeat: Infinity }}
+            transition={{ duration: isMobile ? 8 : 10, delay: p.delay, repeat: Infinity }} // Slower animation for performance
           >
             <div className="rounded-full bg-cyan-400 blur-xl w-full h-full" />
           </motion.div>
@@ -284,12 +284,12 @@ export default function TravellingAir() {
         <motion.path
           d={getSVGPath(zigzagPoints)}
           stroke="url(#zigzagGradient)"
-          strokeWidth="8"
+          strokeWidth="6" // Reduced from 8
           fill="none"
           filter="url(#glow)"
           strokeDasharray="20 36"
           animate={{ strokeDashoffset: [0, -110] }}
-          transition={{ repeat: Infinity, duration: 11, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 15, ease: "linear" }} // Slower animation for performance
         />
         {/* Event dots (skip first and last dummy points) */}
         {zigzagPoints.map((pt, idx) =>
@@ -320,16 +320,16 @@ export default function TravellingAir() {
       >
         <motion.div
           style={{
-            filter: "drop-shadow(0 0 24px #59fff7) drop-shadow(0px 10px 20px #18175777)",
-            background: 'rgba(24,208,255,0.08)',
+            filter: "drop-shadow(0 0 18px #59fff7) drop-shadow(0px 8px 16px #18175777)", // Reduced glow
+            background: 'rgba(24,208,255,0.06)', // Reduced opacity
             borderRadius: 50
           }}
           animate={{
-            y: [0, -20, 0], rotate: [-4, 8, -4],
+            y: [0, -15, 0], rotate: [-3, 6, -3], // Reduced movement and rotation
           }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }} // Slower animation
         >
-          <Plane size={62} className="text-cyan-300" />
+          <Plane size={56} className="text-cyan-300" /> {/* Smaller size */}
         </motion.div>
       </motion.div>
 
@@ -354,7 +354,7 @@ export default function TravellingAir() {
             }}
             initial={{ opacity: 0, y: 60 }}
             animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-            transition={{ duration: 1, delay: 0.27 + eventIdx * 0.07 }}
+            transition={{ duration: 1.2, delay: 0.3 + eventIdx * 0.08 }} // Slightly slower for performance
           >
             <div
               className={`relative rounded-3xl bg-gradient-to-br from-indigo-900/90 to-slate-950/85 

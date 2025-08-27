@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Menu, X, Plane, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "../ui/button";
 import AerophiliaLogo from '../../assets/Aerophilia-white.svg';
 import { useAuth } from "../../context/AuthContext";
@@ -144,59 +144,9 @@ const NavbarComponent: React.FC<NavbarComponentProps> = ({ className }) => {
             {/* Squadron Formation */}
             <div className="relative">
               {/* Main Aircraft */}
-              <motion.div
-                className="relative z-10"
-                whileHover={{ 
-                  scale: 1.1,
-                  rotateZ: [0, -3, 3, 0],
-                  x: [0, 8, -4, 0]
-                }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-              >
-                <Plane 
-                  className="h-9 w-9 drop-shadow-lg" 
-                  style={{ 
-                    color: LEGEND_COLORS.ACCENT,
-                    filter: `drop-shadow(0 0 12px ${LEGEND_COLORS.GLOW})`
-                  }}
-                />
-              </motion.div>
               
-              {/* Wing Aircraft Formation */}
-              <motion.div
-                className="absolute -top-1 -left-2 z-0"
-                animate={{ 
-                  x: [0, -3, 2, 0],
-                  y: [0, 1, -1, 0],
-                  rotate: [0, -2, 1, 0]
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, delay: 0.3 }}
-              >
-                <Plane 
-                  className="h-4 w-4 opacity-60" 
-                  style={{ 
-                    color: LEGEND_COLORS.SILVER,
-                    filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.PRIMARY})`
-                  }}
-                />
-              </motion.div>
-              <motion.div
-                className="absolute -top-1 -right-2 z-0"
-                animate={{ 
-                  x: [0, 3, -2, 0],
-                  y: [0, 1, -1, 0],
-                  rotate: [0, 2, -1, 0]
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, delay: 0.4 }}
-              >
-                <Plane 
-                  className="h-4 w-4 opacity-60" 
-                  style={{ 
-                    color: LEGEND_COLORS.SILVER,
-                    filter: `drop-shadow(0 0 6px ${LEGEND_COLORS.PRIMARY})`
-                  }}
-                />
-              </motion.div>
+              
+              
 
               {/* Legendary Contrails */}
               <motion.div
