@@ -7,6 +7,13 @@ import type { EventsPageProps } from './EventsPage.types';
 const EventsPage: React.FC<EventsPageProps> = ({ className }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [flippedCard, setFlippedCard] = useState<number | null>(null);
+
+  // Handle card flip for mobile
+  const handleCardFlip = (eventId: number) => {
+    setFlippedCard(flippedCard === eventId ? null : eventId);
+  };
 
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
@@ -199,57 +206,142 @@ const EventsPage: React.FC<EventsPageProps> = ({ className }) => {
             {filteredEvents.map((event) => (
               <motion.div 
                 key={event.id}
-                className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden hover:bg-gray-700/50 transition-all duration-300 group"
-                variants={fadeInUp}
-                whileHover={{ scale: 1.02, y: -5 }}
+                className="relative h-96"
+                style={{ perspective: '1000px' }}
+                onHoverStart={() => {
+                  // Only enable hover on non-touch devices (desktop)
+                  if (window.matchMedia('(hover: hover)').matches) {
+                    setHoveredCard(event.id);
+                  }
+                }}
+                onHoverEnd={() => {
+                  if (window.matchMedia('(hover: hover)').matches) {
+                    setHoveredCard(null);
+                  }
+                }}
               >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <event.icon className={`w-8 h-8 text-${event.color}-400`} />
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full bg-${event.color}-500/20 text-${event.color}-400 uppercase tracking-wider`}>
-                      {event.category}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors">
-                    {event.title}
-                  </h3>
-                  
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                    {event.description}
-                  </p>
-                  
-                  <div className="space-y-2 mb-4 text-sm">
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <Calendar className="w-4 h-4 text-blue-400" />
-                      {event.date}
+                <motion.div
+                  className="relative w-full h-full cursor-pointer"
+                  variants={fadeInUp}
+                  animate={{
+                    rotateY: (hoveredCard === event.id || flippedCard === event.id) ? 180 : 0,
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  {/* Front Side */}
+                  <div 
+                    className="absolute inset-0 w-full h-full p-6 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl flex flex-col items-center justify-center text-center"
+                    style={{ backfaceVisibility: 'hidden' }}
+                  >
+                    <div className="mb-4">
+                      <event.icon className={`w-16 h-16 text-${event.color}-400 mx-auto mb-4`} />
+                      <span className={`px-3 py-1 text-xs font-semibold rounded-full bg-${event.color}-500/20 text-${event.color}-400 uppercase tracking-wider`}>
+                        {event.category}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <Clock className="w-4 h-4 text-green-400" />
-                      {event.time}
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <MapPin className="w-4 h-4 text-red-400" />
-                      {event.location}
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <Users className="w-4 h-4 text-purple-400" />
-                      {event.participants}
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="text-lg font-bold text-green-400">
-                      Prize: {event.prize}
-                    </div>
-                    <Button 
-                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                    
+                    <h3 className="text-2xl font-bold text-white mb-4">
+                      {event.title}
+                    </h3>
+
+                    {/* Mobile View Button */}
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardFlip(event.id);
+                      }}
+                      className="md:hidden bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-sm font-medium"
                       size="sm"
                     >
-                      Register
+                      View Details
                     </Button>
                   </div>
-                </div>
+
+                  {/* Back Side */}
+                  <div 
+                    className="absolute inset-0 w-full h-full p-6 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-600 rounded-2xl"
+                    style={{ 
+                      backfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg) scaleX(-1)'
+                    }}
+                  >
+                    <div className="flex flex-col h-full" style={{ transform: 'scaleX(-1)' }}>
+                      <div className="flex items-center gap-3 mb-3">
+                        <event.icon className={`w-8 h-8 text-${event.color}-400`} />
+                        <div>
+                          <h3 className="text-lg font-bold text-white">
+                            {event.title}
+                          </h3>
+                          <span className={`text-xs text-${event.color}-400 uppercase tracking-wider`}>
+                            Event Details
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1 mb-2">
+                        <h4 className="text-sm font-semibold text-blue-300 mb-2">About This Event:</h4>
+                        <p className="text-gray-200 text-xs leading-relaxed mb-2">
+                          {event.description.substring(0, 90)}...
+                        </p>
+                        
+                        <div className="space-y-1 text-xs mb-2">
+                          <div className="flex items-center gap-2 text-gray-300">
+                            <Calendar className="w-3 h-3 text-blue-400" />
+                            {event.date}
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-300">
+                            <Clock className="w-3 h-3 text-green-400" />
+                            {event.time}
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-300">
+                            <MapPin className="w-3 h-3 text-red-400" />
+                            {event.location}
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-300">
+                            <Users className="w-3 h-3 text-purple-400" />
+                            {event.participants}
+                          </div>
+                        </div>
+                        
+                        <div className="bg-gray-800/50 p-1.5 rounded-lg mb-2">
+                          <div className="flex items-center gap-2 text-green-400">
+                            <Trophy className="w-3 h-3" />
+                            <span className="font-bold text-xs">Prize: {event.prize}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-between items-center mt-auto pt-2">
+                        {/* Back Button for Mobile */}
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCardFlip(event.id);
+                          }}
+                          className="md:hidden bg-gray-600 hover:bg-gray-700 text-white text-xs px-3 py-1"
+                          size="sm"
+                          variant="outline"
+                        >
+                          ← Back
+                        </Button>
+                        
+                        {/* Register Button - adjusts position based on screen size */}
+                        <Button 
+                          className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 md:ml-auto"
+                          size="sm"
+                        >
+                          Register
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>
