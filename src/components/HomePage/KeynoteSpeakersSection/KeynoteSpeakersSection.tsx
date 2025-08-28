@@ -15,48 +15,48 @@ const KeynoteSpeakersSection: React.FC<KeynoteSpeakersSectionProps> = ({ classNa
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%, rgba(0,87,183,0.08), transparent_50%)]"></div>
       </div>
 
-      {/* Ultra Premium Floating icons with enhanced animations */}
+      {/* Optimized Floating icons with reduced animation complexity */}
       <motion.div
-        className="absolute top-20 right-20 text-[#3ec6ff]/30"
+        className="absolute top-20 right-20 text-[#3ec6ff]/25" // Reduced opacity
         animate={{ 
           rotate: 360, 
-          y: [0, 25, 0],
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.6, 0.3]
+          y: [0, 20, 0], // Reduced movement
+          scale: [1, 1.05, 1], // Reduced scale change
+          opacity: [0.25, 0.4, 0.25] // Reduced opacity range
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 24, repeat: Infinity, ease: "linear" }} // Slower animation
       >
-        <Mic size={140} />
+        <Mic size={120} /> {/* Smaller size */}
       </motion.div>
       <motion.div
-        className="absolute bottom-20 left-20 text-[#0057b7]/30"
+        className="absolute bottom-20 left-20 text-[#0057b7]/25" // Reduced opacity
         animate={{ 
           rotate: -360, 
-          y: [0, -25, 0],
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.7, 0.3]
+          y: [0, -20, 0], // Reduced movement
+          scale: [1, 1.08, 1], // Reduced scale change
+          opacity: [0.25, 0.5, 0.25] // Reduced opacity range
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }} // Slower animation
       >
-        <Award size={140} />
+        <Award size={120} /> {/* Smaller size */}
       </motion.div>
 
-      {/* Premium background particles */}
+      {/* Optimized background particles with reduced count */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(4)].map((_, i) => ( // Reduced from 8 to 4
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-[#3ec6ff]/20 rounded-full"
+            className="absolute w-1.5 h-1.5 bg-[#3ec6ff]/15 rounded-full" // Smaller size and reduced opacity
             animate={{
               x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth],
               y: [Math.random() * window.innerHeight, Math.random() * window.innerHeight],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
+              opacity: [0, 0.8, 0], // Reduced max opacity
+              scale: [0, 0.8, 0] // Reduced scale
             }}
             transition={{
-              duration: 8 + i * 2,
+              duration: 12 + i * 3, // Slower animation
               repeat: Infinity,
-              delay: i * 1.5,
+              delay: i * 2,
               ease: "easeInOut"
             }}
           />
@@ -75,25 +75,25 @@ const KeynoteSpeakersSection: React.FC<KeynoteSpeakersSectionProps> = ({ classNa
           <motion.div
             className="absolute -top-10 left-1/2 transform -translate-x-1/2"
             animate={{ 
-              scale: [1, 1.3, 1], 
-              rotate: [0, 20, -20, 0],
-              opacity: [0.3, 0.8, 0.3]
+              scale: [1, 1.15, 1], // Reduced scale change
+              rotate: [0, 15, -15, 0], // Reduced rotation
+              opacity: [0.25, 0.6, 0.25] // Reduced opacity range
             }}
-            transition={{ duration: 6, repeat: Infinity }}
+            transition={{ duration: 8, repeat: Infinity }} // Slower animation
           >
-            <Star className="text-[#0057b7]/40" size={80} />
+            <Star className="text-[#0057b7]/35" size={70} /> {/* Smaller size and reduced opacity */}
           </motion.div>
           
           <motion.h2 
             className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6"
             animate={{
               textShadow: [
-                "0 0 20px rgba(62,198,255,0.5)",
-                "0 0 40px rgba(255,111,26,0.3)",
-                "0 0 20px rgba(62,198,255,0.5)"
+                "0 0 15px rgba(62,198,255,0.4)", // Reduced glow intensity
+                "0 0 25px rgba(255,111,26,0.2)",
+                "0 0 15px rgba(62,198,255,0.4)"
               ]
             }}
-            transition={{ duration: 4, repeat: Infinity }}
+            transition={{ duration: 6, repeat: Infinity }} // Slower animation
           >
             Keynote{" "}
             <span className="bg-gradient-to-r from-[#3ec6ff] via-[#0057b7] to-[#1e40af] bg-clip-text text-transparent">

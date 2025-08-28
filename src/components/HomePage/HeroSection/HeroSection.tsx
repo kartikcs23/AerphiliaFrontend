@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Stars, OrbitControls, Float, MeshWobbleMaterial } from '@react-three/drei';
@@ -7,24 +7,41 @@ import AerophiliaLogo from '../../../assets/Aerophilia-white.svg';
 import { Link } from 'react-router-dom';
 import type { HeroSectionProps } from './HeroSection.types';
 
-// Ultra Premium 3D Airplane Component
+// Ultra Premium 3D Airplane Component - Optimized
 function UltraPremiumAirplane() {
   const meshRef = useRef<any>(null);
+  const propellerRef = useRef<any>(null);
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (meshRef.current) {
-      const animate = () => {
-        if (meshRef.current) {
-          meshRef.current.rotation.y += hovered ? 0.02 : 0.008;
-          meshRef.current.rotation.x = Math.sin(Date.now() * 0.001) * 0.15;
-          meshRef.current.position.y = Math.sin(Date.now() * 0.002) * 0.8;
-          meshRef.current.position.x = Math.cos(Date.now() * 0.001) * 0.5;
-          meshRef.current.position.z = Math.sin(Date.now() * 0.0015) * 0.3;
+      let animationId: number;
+      let lastTime = 0;
+      
+      const animate = (currentTime: number) => {
+        // Throttle animation to 20fps instead of 30fps for maximum performance
+        if (currentTime - lastTime >= 50) {
+          if (meshRef.current) {
+            const time = currentTime * 0.001;
+            meshRef.current.rotation.y += hovered ? 0.015 : 0.006; // Reduced rotation speed
+            meshRef.current.rotation.x = Math.sin(time) * 0.1; // Reduced amplitude
+            meshRef.current.position.y = Math.sin(time * 1.5) * 0.6; // Reduced movement
+            meshRef.current.position.x = Math.cos(time * 0.8) * 0.3; // Reduced movement
+            meshRef.current.position.z = Math.sin(time * 1.2) * 0.2; // Reduced movement
+          }
+          
+          // Update propeller rotation
+          if (propellerRef.current) {
+            propellerRef.current.rotation.z = currentTime * 0.005; // Reduced from 0.01
+          }
+          
+          lastTime = currentTime;
         }
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
       };
-      animate();
+      animationId = requestAnimationFrame(animate);
+      
+      return () => cancelAnimationFrame(animationId);
     }
   }, [hovered]);
 
@@ -42,9 +59,9 @@ function UltraPremiumAirplane() {
         <MeshWobbleMaterial 
           color="#3ec6ff" 
           emissive="#3ec6ff" 
-          emissiveIntensity={0.3}
-          factor={0.1}
-          speed={2}
+          emissiveIntensity={0.2} // Reduced from 0.3
+          factor={0.05}           // Reduced from 0.1
+          speed={1.5}             // Reduced from 2
         />
         
         {/* Wings */}
@@ -53,9 +70,9 @@ function UltraPremiumAirplane() {
           <MeshWobbleMaterial 
             color="#0057b7" 
             emissive="#0057b7" 
-            emissiveIntensity={0.2}
-            factor={0.05}
-            speed={1.5}
+            emissiveIntensity={0.15} // Reduced from 0.2
+            factor={0.03}            // Reduced from 0.05
+            speed={1.2}              // Reduced from 1.5
           />
         </mesh>
         
@@ -65,9 +82,9 @@ function UltraPremiumAirplane() {
           <MeshWobbleMaterial 
             color="#0057b7" 
             emissive="#0057b7" 
-            emissiveIntensity={0.4}
-            factor={0.08}
-            speed={1.8}
+            emissiveIntensity={0.25} // Reduced from 0.4
+            factor={0.05}            // Reduced from 0.08
+            speed={1.4}              // Reduced from 1.8
           />
         </mesh>
         
@@ -77,16 +94,16 @@ function UltraPremiumAirplane() {
           <meshStandardMaterial 
             color="#00ffff" 
             emissive="#00ffff" 
-            emissiveIntensity={hovered ? 2 : 1}
+            emissiveIntensity={hovered ? 1.5 : 0.8} // Reduced intensity
             transparent
-            opacity={0.8}
+            opacity={0.7} // Reduced from 0.8
           />
         </mesh>
         
-        {/* Propeller */}
-        <mesh position={[0, 0, 1.6]} rotation={[0, 0, Date.now() * 0.01]}>
+        {/* Optimized Propeller with controlled rotation */}
+        <mesh ref={propellerRef} position={[0, 0, 1.6]}>
           <cylinderGeometry args={[0.02, 0.02, 1.5, 8]} />
-          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.4} />
         </mesh>
       </mesh>
     </Float>
@@ -103,32 +120,39 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
     offset: ["start start", "end start"]
   });
 
+  // Optimized scroll transforms with reduced stiffness for better performance
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 50, // Reduced from 100
+    damping: 25,   // Reduced from 30
     restDelta: 0.001
   });
 
-  const y = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(smoothProgress, [0, 1], [1, 0.3]);
-  const titleY = useTransform(smoothProgress, [0, 1], [0, -100]);
-  const contentY = useTransform(smoothProgress, [0, 1], [0, -80]);
+  // Reduced transform ranges for better performance
+  const y = useTransform(smoothProgress, [0, 1], ["0%", "20%"]); // Reduced from 30%
+  const opacity = useTransform(smoothProgress, [0, 1], [1, 0.5]); // Less dramatic opacity change
+  const titleY = useTransform(smoothProgress, [0, 1], [0, -60]); // Reduced from -100
+  const contentY = useTransform(smoothProgress, [0, 1], [0, -50]); // Reduced from -80
 
-  // Mouse tracking
+  // Throttled mouse tracking for better performance
   useEffect(() => {
+    let lastCall = 0;
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ 
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1
-      });
+      const now = Date.now();
+      if (now - lastCall >= 16) { // ~60fps throttling
+        setMousePosition({ 
+          x: (e.clientX / window.innerWidth) * 2 - 1,
+          y: -(e.clientY / window.innerHeight) * 2 + 1
+        });
+        lastCall = now;
+      }
     };
     
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Event details with enhanced data
-  const eventStats = [
+  // Memoized event details with enhanced data to avoid recreation on each render
+  const eventStats = useMemo(() => [
     { 
       icon: Calendar, 
       label: 'November 5-7, 2025', 
@@ -153,7 +177,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
       description: 'Life-Changing Rewards',
       gradient: 'from-[#3ec6ff] to-[#0057b7]'
     },
-  ];
+  ], []);
 
   return (
     <motion.section 
@@ -161,27 +185,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
       style={{ y, opacity }}
       className={`relative min-h-screen flex items-center justify-center overflow-hidden ${className}`}
     >
-      {/* Ultra Premium 3D Background */}
+      {/* Optimized 3D Background with reduced complexity */}
       <div className="absolute inset-0 z-0">
         <Canvas 
           camera={{ position: [0, 0, 8], fov: 60 }}
           style={{ background: 'transparent' }}
+          dpr={[1, 1.5]} // Limit pixel ratio for better performance
         >
-          <ambientLight intensity={0.4} />
-          <pointLight position={[10, 10, 10]} intensity={1.5} color="#3ec6ff" />
-          <pointLight position={[-10, -10, -10]} color="#0057b7" intensity={1.2} />
-          <pointLight position={[0, 10, -10]} color="#0057b7" intensity={0.8} />
+          <ambientLight intensity={0.3} />
+          <pointLight position={[10, 10, 10]} intensity={1.2} color="#3ec6ff" />
+          <pointLight position={[-10, -10, -10]} color="#0057b7" intensity={1} />
           
           <UltraPremiumAirplane />
           
           <Stars 
-            radius={150} 
-            depth={100} 
-            count={8000} 
-            factor={6} 
-            saturation={0.5} 
+            radius={120}   // Further reduced from 150
+            depth={30}     // Further reduced from 50
+            count={1500}   // Further reduced from 3000 for maximum performance
+            factor={3}     // Further reduced from 4
+            saturation={0.3} // Further reduced from 0.4
             fade 
-            speed={3} 
+            speed={1.5}    // Further reduced from 2
           />
           
           <OrbitControls 
@@ -189,7 +213,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
             enablePan={false} 
             enableRotate={true} 
             autoRotate={true}
-            autoRotateSpeed={0.3}
+            autoRotateSpeed={0.1} // Further reduced from 0.2
             maxPolarAngle={Math.PI / 1.8}
             minPolarAngle={Math.PI / 2.5}
           />
@@ -204,37 +228,37 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,111,26,0.2),transparent_60%)]"></div>
       </div>
 
-      {/* Premium Floating Elements */}
+      {/* Optimized Floating Elements with reduced movement */}
       <motion.div
         className="absolute top-20 left-20 text-[#3ec6ff]/30"
         animate={{ 
           rotate: 360,
-          scale: [1, 1.2, 1],
-          x: mousePosition.x * 50,
-          y: mousePosition.y * 30
+          scale: [1, 1.1, 1], // Reduced from 1.2
+          x: mousePosition.x * 30, // Reduced from 50
+          y: mousePosition.y * 20  // Reduced from 30
         }}
         transition={{ 
-          rotate: { duration: 30, repeat: Infinity, ease: "linear" },
-          scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+          rotate: { duration: 40, repeat: Infinity, ease: "linear" }, // Slower rotation
+          scale: { duration: 5, repeat: Infinity, ease: "easeInOut" }  // Slower scaling
         }}
       >
-        <Sparkles size={120} />
+        <Sparkles size={100} /> {/* Reduced from 120 */}
       </motion.div>
       
       <motion.div
         className="absolute bottom-20 right-20 text-[#0057b7]/40"
         animate={{ 
           rotate: -360,
-          scale: [1.1, 1, 1.1],
-          x: mousePosition.x * -40,
-          y: mousePosition.y * -25
+          scale: [1.05, 1, 1.05], // Reduced from 1.1
+          x: mousePosition.x * -30, // Reduced from -40
+          y: mousePosition.y * -20  // Reduced from -25
         }}
         transition={{ 
-          rotate: { duration: 25, repeat: Infinity, ease: "linear" },
-          scale: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+          rotate: { duration: 35, repeat: Infinity, ease: "linear" }, // Slower rotation
+          scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }  // Slower scaling
         }}
       >
-        <Zap size={100} />
+        <Zap size={80} /> {/* Reduced from 100 */}
       </motion.div>
 
       {/* Main Content Container */}
@@ -247,13 +271,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
             className="space-y-8"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} // Reduced from 1.5
           >
             {/* Premium Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.3 }}
+              transition={{ duration: 1, delay: 0.3 }} // Reduced from 1.2
               className="flex items-center space-x-4 mb-8"
             >
               <motion.img 
@@ -273,7 +297,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
               className="text-6xl lg:text-8xl font-black leading-tight"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5, delay: 0.5 }}
+              transition={{ duration: 1.2, delay: 0.5 }} // Reduced from 1.5
             >
               <motion.span 
                 className="bg-gradient-to-r from-[#3ec6ff] via-white to-[#0057b7] bg-clip-text text-transparent"
@@ -347,7 +371,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
             className="space-y-8"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }} // Reduced from 1.5
           >
             {/* Premium Event Stats */}
             <div className="grid grid-cols-2 gap-6">
