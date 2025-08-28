@@ -228,6 +228,29 @@ body {
   border: 0;
 }
 
+/* Event Card 3D Rotation Animation */
+.event-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  backface-visibility: hidden;
+}
+
+.event-card:hover {
+  transform: rotateY(360deg);
+  animation: rotate-once 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes rotate-once {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.event-card:hover {
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
 /* Utility Classes */
 .transition-all-300 {
   transition: all 0.3s ease;
